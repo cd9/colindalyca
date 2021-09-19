@@ -8,7 +8,7 @@ I've always has a personal website, but it's admittedly been nothing more than a
 <span style="font-size:0.5em"><br/><i>old and lame website</i></span>
 </p>
 
-The goal for Personal Website 2.0 is to create a novel, non-traditional personal website that I can use as a canvas (no pun intended) for experimental web dev.
+The goal for Personal Website 2.0 is to create a novel personal website that I can use as a canvas (no pun intended) for experimental web dev and cool browser-based hacky stuff.
 
 ## Goals
 
