@@ -1,7 +1,8 @@
 # Personal Website
 
 ## Foreword
-I've always has a personal website, but it's admittedly been nothing more than a generic project index. The only merit it had was that I didn't use a template. It was built in AngularJS, which has since gone through dozens of updates, making my website now officially ***old and lame!***.
+
+I've always has a personal website, but it's admittedly been nothing more than a generic project index. The only merit it had was that I didn't use a template. It was built in AngularJS, which has since gone through dozens of updates, making my website now officially **_old and lame!_**.
 
 <p align=center>
 <img src=./img/personal_website_lame.PNG width='200'/>
