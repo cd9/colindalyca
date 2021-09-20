@@ -16,6 +16,13 @@ export class CanvasManager {
 
 		window.onload = this.initialize.bind(this);
 		window.onresize = this.initialize.bind(this);
+		if (
+			"ontouchstart" in window ||
+			navigator.maxTouchPoints > 0 ||
+			navigator.msMaxTouchPoints > 0
+		) {
+			this.saveMouseCoordinates({ pageX: window.innerWidth/2, pageY: 700});
+		}
 		window.onmousemove = this.saveMouseCoordinates.bind(this);
 	}
 

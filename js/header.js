@@ -17,7 +17,7 @@ export class Header {
 	}
 
 	grabGeo() {
-		fetch("http://ip-api.com/json").then((response) => {
+		fetch("https://ip-api.com/json").then((response) => {
 			response.json().then((json) => {
 				var message = `it appears you are in ${json.city}, ${json.region}, ${json.country}, ${json.zip} - you should use an ad blocker and a VPN!`;
 				this.messages.push(message);
