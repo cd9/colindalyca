@@ -1,6 +1,6 @@
 export class FrameData {
-	constructor(frame, mouseCoordinates) {
+	constructor(frame, mouseXY) {
 		this.frame = frame;
-		this.mouseCoordinates = mouseCoordinates;
+		this.mouseXY = mouseXY;
 	}
 }
