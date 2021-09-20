@@ -42,7 +42,7 @@ export class CanvasManager {
 		}
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = window.innerWidth - 20;
-		this.canvas.height = Math.max(window.innerHeight, 2200);
+		this.canvas.height = Math.max(window.innerHeight, 1800);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -104,7 +104,7 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new TextField(
 				this.canvas,
-				"This website was entirely built from scratch using native HTML5 Canvas",
+				"This website was built from scratch using native HTML5 Canvas :^)",
 				this.canvas.width / 2,
 				this.canvas.height - 25,
 				18

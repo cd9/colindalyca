@@ -35,7 +35,7 @@ export class Header {
 	getFullString() {
 		var fullString = "";
 		this.messages.forEach((m) => {
-			fullString += m + "            ";
+			fullString += m + "                                 ";
 		});
 		return fullString;
 	}

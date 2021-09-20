@@ -67,7 +67,7 @@ export class NameWidget {
 		offsetY,
 		mouseX,
 		mouseY,
-		hue,
+		frame,
 		saturation,
 		filled
 	) {
@@ -77,18 +77,21 @@ export class NameWidget {
 		}
 		var x = offsetX + x * this.blockWidth + (x - 1) * this.blockSpacing;
 		var y = offsetY + y * this.blockWidth + (y - 1) * this.blockSpacing;
+		var hue = ((x + y) / 10 + frame) % 256;
 
 		// If mouse is near, create a bubble effect
 		var mouseXOffset = 0;
 		var mouseYOffset = 0;
-		var scaleModifier = 1;
+		var scaleModifier =
+			0.6 + (Math.abs((((x + y) / 20 + frame / 3) % 61) - 30) / 30) * 0.4;
 		var squareDist = Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2);
 		if (squareDist < this.mouseDistanceSquared) {
 			mouseXOffset =
 				0.2 * (x - mouseX) * (1 - squareDist / this.mouseDistanceSquared);
 			mouseYOffset =
 				0.2 * (y - mouseY) * (1 - squareDist / this.mouseDistanceSquared);
-			scaleModifier = (squareDist / this.mouseDistanceSquared) * 0.1 + 0.9;
+			scaleModifier =
+				(squareDist / this.mouseDistanceSquared) * 0.1 + scaleModifier * 0.9;
 		}
 		var brightness =
 			50 + Math.max(0, (1 - squareDist / this.mouseDistanceSquared) * 50);
@@ -112,7 +115,6 @@ export class NameWidget {
 		var mouseXY = frameData.mouseXY;
 		for (var i = 0; i < height; i++) {
 			for (var j = 0; j < width; j++) {
-				var hue = (i + j + frameData.frame) % 256;
 				this.drawSingleBlock(
 					j,
 					i,
@@ -120,7 +122,7 @@ export class NameWidget {
 					75,
 					mouseXY[0],
 					mouseXY[1],
-					hue,
+					frameData.frame,
 					50,
 					this.matrix[i][j] == 1
 				);
