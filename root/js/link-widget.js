@@ -1,3 +1,5 @@
+import { COLOR_THEME } from "./color-theme.js";
+
 export class LinkWidget {
 	constructor(canvas, x, y, str, link, fontSize) {
 		this.canvas = canvas;
@@ -39,9 +41,9 @@ export class LinkWidget {
 		var fontSizeFinal = this.fontSize;
 		if (this.overlapping) {
 			fontSizeFinal += 2;
-			this.ctx.fillStyle = "blue";
+			this.ctx.fillStyle = COLOR_THEME.purple;
 		} else {
-			this.ctx.fillStyle = "black";
+			this.ctx.fillStyle = COLOR_THEME.blue;
 		}
 		this.ctx.textAlign = "center";
 		this.ctx.font = `bold ${fontSizeFinal}px consolas`;

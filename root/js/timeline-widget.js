@@ -1,10 +1,11 @@
+import { COLOR_THEME } from "./color-theme.js";
 import { TextField } from "./text-field.js";
 
 export class TimelineWidget {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.yStart = 400;
+		this.yStart = 375;
 		this.xStart = canvas.width / 2 - 100;
 
 		this.titleTextField = new TextField(
@@ -12,16 +13,22 @@ export class TimelineWidget {
 			"Timeline",
 			canvas.width / 2,
 			this.yStart - 10,
-			35
+			35,
+			COLOR_THEME.green
 		);
 		this.blocksPerEvent = 7;
-		this.blockHeight = 30;
-		this.circleRadius = 10;
-		this.blockWidth = 6;
+		this.blockHeight = 15;
+		this.circleRadius = 8;
+		this.blockWidth = 4;
 		this.blockSpacing = 12;
 		this.events = [
 			["2021", "Software Engineer", "Google", "Mountain View, California"],
-			["2021", "Bachelor of Computer Science", "University of Waterloo", "Computer Science, Co-op"],
+			[
+				"2021",
+				"Bachelor of Computer Science",
+				"University of Waterloo",
+				"Computer Science, Co-op",
+			],
 			["2020", "Software Engineering Intern", "Google", "Remote, New York"],
 			["2020", "Software Engineering Intern", "Yext", "New York, New York"],
 			[
@@ -77,10 +84,10 @@ export class TimelineWidget {
 					// Render date
 					this.renderText(
 						xOffset + this.blockWidth - 20,
-						yOffset + 15,
-						event[0],
-						30,
-						"#333333",
+						yOffset + 12,
+						`>${event[0]}`,
+						22,
+						COLOR_THEME.green,
 						"right",
 						selected
 					);
@@ -88,10 +95,10 @@ export class TimelineWidget {
 					// Render Title
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 15,
+						yOffset + 12,
 						event[1],
-						25,
-						"black",
+						22,
+						COLOR_THEME.purple,
 						"left",
 						selected
 					);
@@ -99,22 +106,22 @@ export class TimelineWidget {
 					// Render Company
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 40,
+						yOffset + 35,
 						event[2],
-						22,
-						"#420099",
+						18,
+						COLOR_THEME.lightOrange,
 						"left",
-						selected
+						false
 					);
 
 					if (selected) {
 						// Render Description
 						this.renderText(
 							xOffset + this.blockWidth + 20,
-							yOffset + 65,
+							yOffset + 58,
 							event[3],
-							20,
-							"blue",
+							18,
+							COLOR_THEME.blue,
 							"left",
 							false
 						);
@@ -125,9 +132,12 @@ export class TimelineWidget {
 					// Otherwise, render a normal tick
 					var blockHeight = Math.max(
 						10,
-						Math.min(20, (Math.abs(yOffset - mouseY) / 200) * this.blockHeight)
+						Math.min(
+							this.blockHeight,
+							(Math.abs(yOffset - mouseY) / 200) * this.blockHeight
+						)
 					);
-					this.ctx.fillStyle = "black";
+					this.ctx.fillStyle = COLOR_THEME.lines;
 					this.ctx.beginPath();
 					this.ctx.fillRect(xOffset, yOffset, this.blockWidth, blockHeight);
 					yOffset += blockHeight + this.blockSpacing;

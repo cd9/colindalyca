@@ -23,6 +23,8 @@ export class CanvasManager {
 	runClock() {
 		// Clear canvas every frame
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillStyle = "#050505";
+		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		var frameData = new FrameData(this.frame, this.mouseXY);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
@@ -56,7 +58,7 @@ export class CanvasManager {
 		this.canvasElements.push(new Header(this.canvas));
 
 		// Link Bar
-		var linkY = 320;
+		var linkY = 300;
 		var linkX = this.canvas.width / 2;
 		var linkSize = 30;
 

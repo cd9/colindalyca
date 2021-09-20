@@ -91,7 +91,7 @@ export class NameWidget {
 			scaleModifier = (squareDist / this.mouseDistanceSquared) * 0.1 + 0.9;
 		}
 		var brightness =
-			30 + Math.max(0, (1 - squareDist / this.mouseDistanceSquared) * 50);
+			50 + Math.max(0, (1 - squareDist / this.mouseDistanceSquared) * 50);
 		this.ctx.fillStyle = `hsl(${hue},${saturation}%,${brightness}%)`;
 		this.ctx.beginPath();
 		this.ctx.fillRect(
@@ -117,7 +117,7 @@ export class NameWidget {
 					j,
 					i,
 					offsetX,
-					100,
+					75,
 					mouseXY[0],
 					mouseXY[1],
 					hue,

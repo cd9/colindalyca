@@ -1,9 +1,10 @@
+import { COLOR_THEME } from "./color-theme.js";
 export class Header {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.lineY = 50;
-		this.lineWidth = 4;
+		this.lineY = 30;
+		this.lineWidth = 2;
 		this.messages = ["welcome to my website!", "good luck scraping it!"];
 		this.grabGeo();
 		this.configureText();
@@ -26,9 +27,9 @@ export class Header {
 	}
 
 	configureText() {
-		this.ctx.fillStyle = "black";
+		this.ctx.fillStyle = COLOR_THEME.mainText;
 		this.ctx.textAlign = "left";
-		this.ctx.font = `bold 25px consolas`;
+		this.ctx.font = `20px consolas`;
 	}
 
 	getFullString() {
@@ -41,6 +42,7 @@ export class Header {
 
 	tick(frameData) {
 		// Draw line
+		this.ctx.strokeStyle = COLOR_THEME.lines;
 		this.ctx.beginPath();
 		this.ctx.moveTo(0, this.lineY);
 		this.ctx.lineWidth = this.lineWidth;
@@ -54,7 +56,7 @@ export class Header {
 			this.totalWidth -
 				((frameData.frame * this.speed) %
 					(this.totalWidth * 2 + this.canvas.width)),
-			this.lineY - 15
+			this.lineY - 10
 		);
 	}
 }
