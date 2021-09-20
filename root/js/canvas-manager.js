@@ -3,6 +3,7 @@ import { FrameData } from "./frame-data.js";
 import { Header } from "./header.js";
 import { TextField } from "./text-field.js";
 import { LinkWidget } from "./link-widget.js";
+import { CursorWidget } from "./cursor-widget.js";
 
 export class CanvasManager {
 	constructor() {
