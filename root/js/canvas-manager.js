@@ -1,7 +1,8 @@
-import { FontDrawer } from "./font-drawer.js";
+import { NameWidget } from "./name-widget.js";
 import { FrameData } from "./frame-data.js";
-import { CursorWidget } from "./cursor-widget.js";
 import { Header } from "./header.js";
+import { TextField } from "./text-field.js";
+import { LinkWidget } from "./link-widget.js";
 
 export class CanvasManager {
 	constructor() {
@@ -22,7 +23,7 @@ export class CanvasManager {
 		// Clear canvas every frame
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		var frameData = new FrameData(this.frame, this.mouseXY);
-		this.canvasElements.forEach(ce => ce.tick(frameData));
+		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
 	}
 
@@ -47,17 +48,56 @@ export class CanvasManager {
 		// Reset canvas elements
 		this.canvasElements = [];
 
-		// Create a FontDrawer
-		this.canvasElements.push(new FontDrawer(this.canvas));
-		// Follow cursor with an annoying widget
-		this.canvasElements.push(new CursorWidget(this.canvas));
+		// Create a NameWidget
+		this.canvasElements.push(new NameWidget(this.canvas));
+
 		// Website header
 		this.canvasElements.push(new Header(this.canvas));
 
-		// Tick clock for 60fps rendering
+		// Link Bar
+		var linkY = 320;
+		var linkX = this.canvas.width/2;
+		var linkSize = 30;
+
+		// Github Link
+		this.canvasElements.push(
+			new LinkWidget(
+				this.canvas,
+				linkX-75,
+				linkY,
+				"Github",
+				"https://github.com/cdaly333",
+				linkSize
+			)
+		);
+
+		// LinkedIn Link
+		this.canvasElements.push(
+			new LinkWidget(
+				this.canvas,
+				linkX+75,
+				linkY,
+				"LinkedIn",
+				"https://www.linkedin.com/in/cjdaly/",
+				linkSize
+			)
+		);
+
+		// Footer message
+		this.canvasElements.push(
+			new TextField(
+				this.canvas,
+				"This website was built entirely with HTML5 Canvas",
+				this.canvas.width/2,
+				this.canvas.height - 50,
+				20
+			)
+		);
+
+		// Tick clock for 40fps rendering
 		if (this.clock) {
 			clearInterval(this.clock);
 		}
-		this.clock = setInterval(this.runClock.bind(this), 1000 / 60);
+		this.clock = setInterval(this.runClock.bind(this), 1000 / 40);
 	}
 }
