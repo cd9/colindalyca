@@ -25,10 +25,11 @@ export class LinkWidget {
 		if (this.overlapping) {
 			window.open(this.link);
 		}
+		this.overlapping = false;
 	}
 
-	onTouch(e){
-		var touch = e.touches[0]
+	onTouch(e) {
+		var touch = e.touches[0];
 		this.mouseXY = [touch.pageX, touch.pageY];
 		this.checkOverlapping();
 		this.onClick();

@@ -31,7 +31,7 @@ export class CanvasManager {
 
 	// Track mouse
 	saveMouseCoordinates(e) {
-		this.mouseXY = [e.x, e.y];
+		this.mouseXY = [e.pageX, e.pageY];
 	}
 
 	initialize() {
@@ -41,7 +41,7 @@ export class CanvasManager {
 		}
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = window.innerWidth-20;
-		this.canvas.height = Math.max(window.innerHeight, 1800);
+		this.canvas.height = Math.max(window.innerHeight, 2000);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -91,10 +91,10 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new TextField(
 				this.canvas,
-				"This website was built entirely with HTML5 Canvas",
+				"This website was entirely built from scratch using native HTML5 Canvas",
 				this.canvas.width / 2,
-				this.canvas.height - 50,
-				20
+				this.canvas.height - 25,
+				18
 			)
 		);
 
