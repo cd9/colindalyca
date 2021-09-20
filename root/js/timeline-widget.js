@@ -21,6 +21,7 @@ export class TimelineWidget {
 		this.blockSpacing = 12;
 		this.events = [
 			["2021", "Software Engineer", "Google", "Mountain View, California"],
+			["2021", "Bachelor of Computer Science", "University of Waterloo", "Computer Science, Co-op"],
 			["2020", "Software Engineering Intern", "Google", "Remote, New York"],
 			["2020", "Software Engineering Intern", "Yext", "New York, New York"],
 			[
@@ -59,7 +60,7 @@ export class TimelineWidget {
 				if (j - 1 === this.blocksPerEvent - j) {
 					var circleRadius = this.circleRadius;
 					var selected = false;
-					if (Math.abs(mouseY - yOffset) < 100) {
+					if (Math.abs(mouseY - yOffset) < 50) {
 						circleRadius *= 1.2;
 						selected = true;
 					}
@@ -123,7 +124,7 @@ export class TimelineWidget {
 				} else {
 					// Otherwise, render a normal tick
 					var blockHeight = Math.max(
-						5,
+						10,
 						Math.min(20, (Math.abs(yOffset - mouseY) / 200) * this.blockHeight)
 					);
 					this.ctx.fillStyle = "black";

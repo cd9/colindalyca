@@ -3,7 +3,6 @@ import { FrameData } from "./frame-data.js";
 import { Header } from "./header.js";
 import { TextField } from "./text-field.js";
 import { LinkWidget } from "./link-widget.js";
-import { CursorWidget } from "./cursor-widget.js";
 import { TimelineWidget } from "./timeline-widget.js";
 
 export class CanvasManager {
@@ -40,8 +39,8 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.width = window.innerWidth-20;
-		this.canvas.height = Math.max(window.innerHeight, 2000);
+		this.canvas.width = window.innerWidth - 20;
+		this.canvas.height = Math.max(window.innerHeight, 2200);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -82,6 +81,18 @@ export class CanvasManager {
 				"LinkedIn",
 				"https://www.linkedin.com/in/cjdaly/",
 				linkSize
+			)
+		);
+
+		// Source Code Link
+		this.canvasElements.push(
+			new LinkWidget(
+				this.canvas,
+				linkX,
+				this.canvas.height - 10,
+				"Source Code",
+				"https://github.com/cdaly333/colindalyca",
+				12
 			)
 		);
 
