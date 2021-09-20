@@ -4,6 +4,7 @@ import { Header } from "./header.js";
 import { TextField } from "./text-field.js";
 import { LinkWidget } from "./link-widget.js";
 import { CursorWidget } from "./cursor-widget.js";
+import { TimelineWidget } from "./timeline-widget.js";
 
 export class CanvasManager {
 	constructor() {
@@ -39,8 +40,8 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
+		this.canvas.width = window.innerWidth-20;
+		this.canvas.height = Math.max(window.innerHeight, 1800);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -57,14 +58,14 @@ export class CanvasManager {
 
 		// Link Bar
 		var linkY = 320;
-		var linkX = this.canvas.width/2;
+		var linkX = this.canvas.width / 2;
 		var linkSize = 30;
 
 		// Github Link
 		this.canvasElements.push(
 			new LinkWidget(
 				this.canvas,
-				linkX-75,
+				linkX - 75,
 				linkY,
 				"Github",
 				"https://github.com/cdaly333",
@@ -76,7 +77,7 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new LinkWidget(
 				this.canvas,
-				linkX+75,
+				linkX + 75,
 				linkY,
 				"LinkedIn",
 				"https://www.linkedin.com/in/cjdaly/",
@@ -84,12 +85,14 @@ export class CanvasManager {
 			)
 		);
 
+		this.canvasElements.push(new TimelineWidget(this.canvas));
+
 		// Footer message
 		this.canvasElements.push(
 			new TextField(
 				this.canvas,
 				"This website was built entirely with HTML5 Canvas",
-				this.canvas.width/2,
+				this.canvas.width / 2,
 				this.canvas.height - 50,
 				20
 			)

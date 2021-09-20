@@ -100,7 +100,6 @@ export class NameWidget {
 			this.blockWidth * scaleModifier,
 			this.blockWidth * scaleModifier
 		);
-		this.ctx.stroke();
 	}
 
 	tick(frameData) {
