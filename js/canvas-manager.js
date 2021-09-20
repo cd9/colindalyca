@@ -58,9 +58,9 @@ export class CanvasManager {
 		this.canvasElements.push(new Header(this.canvas));
 
 		// Link Bar
-		var linkY = 300;
+		var linkY = 285;
 		var linkX = this.canvas.width / 2;
-		var linkSize = 30;
+		var linkSize = 25;
 
 		// Github Link
 		this.canvasElements.push(
