@@ -1,5 +1,6 @@
 import { COLOR_THEME } from "./color-theme.js";
 import { TextField } from "./text-field.js";
+import { TextTyper } from "./text-typer.js";
 
 export class TimelineWidget {
 	constructor(canvas) {
@@ -21,6 +22,7 @@ export class TimelineWidget {
 		this.circleRadius = 8;
 		this.blockWidth = 4;
 		this.blockSpacing = 12;
+		this.textTyper = new TextTyper(this.canvas, 20, COLOR_THEME.blue);
 		this.events = [
 			["2021", "Software Engineer", "Google", "Mountain View, California"],
 			[
@@ -85,8 +87,8 @@ export class TimelineWidget {
 					this.renderText(
 						xOffset + this.blockWidth - 20,
 						yOffset + 12,
-						`>${event[0]}`,
-						22,
+						event[0],
+						28,
 						COLOR_THEME.green,
 						"right",
 						selected
@@ -97,8 +99,8 @@ export class TimelineWidget {
 						xOffset + this.blockWidth + 20,
 						yOffset + 12,
 						event[1],
-						22,
-						COLOR_THEME.purple,
+						28,
+						COLOR_THEME.white,
 						"left",
 						selected
 					);
@@ -106,25 +108,25 @@ export class TimelineWidget {
 					// Render Company
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 35,
+						yOffset + 45,
 						event[2],
-						18,
-						COLOR_THEME.lightOrange,
+						22,
+						COLOR_THEME.purple,
 						"left",
 						false
 					);
 
+					// Save an animation id
+					var animationId = event[1]+event[2];
 					if (selected) {
-						// Render Description
-						this.renderText(
+						// Render Description with a textTyper
+						this.textTyper.tryStart(event[3], animationId);
+						this.textTyper.position(
 							xOffset + this.blockWidth + 20,
-							yOffset + 58,
-							event[3],
-							18,
-							COLOR_THEME.blue,
-							"left",
-							false
+							yOffset + 70
 						);
+					} else {
+						this.textTyper.tryStop(animationId);
 					}
 
 					yOffset += circleRadius + this.blockSpacing;
@@ -149,5 +151,6 @@ export class TimelineWidget {
 	tick(frameData) {
 		this.renderEvents(frameData.mouseXY[1]);
 		this.titleTextField.tick(frameData);
+		this.textTyper.tick(frameData);
 	}
 }

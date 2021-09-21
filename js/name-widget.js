@@ -86,10 +86,9 @@ export class NameWidget {
 			0.6 + (Math.abs((((x + y) / 20 + frame / 3) % 61) - 30) / 30) * 0.4;
 		var squareDist = Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2);
 		if (squareDist < this.mouseDistanceSquared) {
-			mouseXOffset =
-				0.2 * (x - mouseX) * (1 - squareDist / this.mouseDistanceSquared);
-			mouseYOffset =
-				0.2 * (y - mouseY) * (1 - squareDist / this.mouseDistanceSquared);
+			var closeFactor = 1 - squareDist / this.mouseDistanceSquared;
+			mouseXOffset = 0.2 * (x - mouseX) * closeFactor;
+			mouseYOffset = 0.2 * (y - mouseY) * closeFactor;
 			scaleModifier =
 				(squareDist / this.mouseDistanceSquared) * 0.1 + scaleModifier * 0.9;
 		}

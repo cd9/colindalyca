@@ -4,6 +4,7 @@ import { Header } from "./header.js";
 import { TextField } from "./text-field.js";
 import { LinkWidget } from "./link-widget.js";
 import { TimelineWidget } from "./timeline-widget.js";
+import { COLOR_THEME } from "./color-theme.js";
 
 export class CanvasManager {
 	constructor() {
@@ -24,7 +25,7 @@ export class CanvasManager {
 	runClock() {
 		// Clear canvas every frame
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.fillStyle = "#050505";
+		this.ctx.fillStyle = COLOR_THEME.background;
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		var frameData = new FrameData(this.frame, this.mouseXY);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
@@ -42,7 +43,7 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.width = window.innerWidth - 20;
+		this.canvas.width = window.innerWidth;
 		this.canvas.height = Math.max(window.innerHeight, 1800);
 		document.body.appendChild(this.canvas);
 
@@ -69,7 +70,7 @@ export class CanvasManager {
 				this.canvas,
 				linkX - 75,
 				linkY,
-				"Github",
+				">Github",
 				"https://github.com/cdaly333",
 				linkSize
 			)
@@ -81,7 +82,7 @@ export class CanvasManager {
 				this.canvas,
 				linkX + 75,
 				linkY,
-				"LinkedIn",
+				">LinkedIn",
 				"https://www.linkedin.com/in/cjdaly/",
 				linkSize
 			)

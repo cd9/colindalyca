@@ -19,9 +19,14 @@ export class Header {
 	grabGeo() {
 		fetch("https://ip-api.com/json").then((response) => {
 			response.json().then((json) => {
-				var message = `it appears you are in ${json.city}, ${json.region}, ${json.country}, ${json.zip} - you should use an ad blocker and a VPN!`;
-				this.messages.push(message);
-				this.measureText();
+				var city = json.city;
+				var region = json.region;
+				var zip = json.zip;
+				if (city && region && zip) {
+					var message = `it appears you are in ${json.city}, ${json.region}, ${json.country}, ${json.zip} - you should use an ad blocker and a VPN!`;
+					this.messages.push(message);
+					this.measureText();
+				}
 			});
 		});
 	}

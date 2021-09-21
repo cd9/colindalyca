@@ -1,5 +1,5 @@
 export var COLOR_THEME = {
-	background: "#1e1e1e",
+	background: "#242424",
 	lines: "#7f848e",
 	white: "#d4d4d4",
 	lightOrange: "#e5c07b",
@@ -7,4 +7,5 @@ export var COLOR_THEME = {
 	green: "#98c379",
 	blue: "#61afef",
 	purple: "#c678dd",
+	pink: "#e534eb",
 };
