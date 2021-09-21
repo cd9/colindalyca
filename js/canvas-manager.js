@@ -44,7 +44,7 @@ export class CanvasManager {
 		}
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = window.innerWidth;
-		this.canvas.height = Math.max(window.innerHeight, 1800);
+		this.canvas.height = Math.max(window.innerHeight, 2200);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -108,8 +108,9 @@ export class CanvasManager {
 				this.canvas,
 				"This website was built from scratch using native HTML5 Canvas :^)",
 				this.canvas.width / 2,
-				this.canvas.height - 25,
-				18
+				this.canvas.height - 30,
+				16,
+				COLOR_THEME.lightOrange
 			)
 		);
 

@@ -17,34 +17,66 @@ export class TimelineWidget {
 			35,
 			COLOR_THEME.green
 		);
-		this.blocksPerEvent = 7;
+		this.blocksPerEvent = 9;
 		this.blockHeight = 15;
 		this.circleRadius = 8;
 		this.blockWidth = 4;
 		this.blockSpacing = 12;
-		this.textTyper = new TextTyper(this.canvas, 20, COLOR_THEME.blue);
+		this.locationTextTyper = new TextTyper(this.canvas, 20, COLOR_THEME.blue);
+		this.descriptionTextTyper = new TextTyper(
+			this.canvas,
+			20,
+			COLOR_THEME.orange
+		);
 		this.events = [
-			["2021", "Software Engineer", "Google", "Mountain View, California"],
+			[
+				"2021",
+				"Software Engineer",
+				"Google",
+				"Mountain View, California",
+				"Classified Work",
+			],
 			[
 				"2021",
 				"Bachelor of Computer Science",
 				"University of Waterloo",
 				"Computer Science, Co-op",
+				"Related & unrelated coursework",
 			],
-			["2020", "Software Engineering Intern", "Google", "Remote, New York"],
-			["2020", "Software Engineering Intern", "Yext", "New York, New York"],
+			[
+				"2020",
+				"Software Engineering Intern",
+				"Google",
+				"Remote, New York",
+				"Chrome & Nest Dev Tools [javascript, node.js]",
+			],
+			[
+				"2020",
+				"Software Engineering Intern",
+				"Yext",
+				"New York, New York",
+				"Data-intensive microservice management [java]",
+			],
 			[
 				"2018-2019",
-				"Software Engineering Intern (VR/AR)",
+				"Software Engineering Intern",
 				"Splunk",
 				"Santa Clara, California",
+				"VR & AR app development [C#, Unity, javascript]",
 			],
-			["2018", "VR/AR Developer", "Spatial", "New York, New York"],
+			[
+				"2018",
+				"VR/AR Developer",
+				"Spatial",
+				"New York, New York",
+				"VR & AR app development [C#, Unity, WSL, Hololens]",
+			],
 			[
 				"2017",
 				"VC Intern",
 				"Khazanah Nasional Berhad",
 				"San Francisco, California",
+				"Various projects",
 			],
 		];
 	}
@@ -108,7 +140,7 @@ export class TimelineWidget {
 					// Render Company
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 45,
+						yOffset + 40,
 						event[2],
 						22,
 						COLOR_THEME.purple,
@@ -116,17 +148,24 @@ export class TimelineWidget {
 						false
 					);
 
-					// Save an animation id
-					var animationId = event[1]+event[2];
+					// Save animation ids
+					var locationId = event[1] + event[2];
+					var descriptionId = event[1] + event[4];
 					if (selected) {
-						// Render Description with a textTyper
-						this.textTyper.tryStart(event[3], animationId);
-						this.textTyper.position(
+						// Render location and description with a textTyper
+						this.locationTextTyper.tryStart(event[3], locationId);
+						this.locationTextTyper.position(
 							xOffset + this.blockWidth + 20,
 							yOffset + 70
 						);
+						this.descriptionTextTyper.tryStart(event[4], descriptionId);
+						this.descriptionTextTyper.position(
+							xOffset + this.blockWidth + 20,
+							yOffset + 100
+						);
 					} else {
-						this.textTyper.tryStop(animationId);
+						this.locationTextTyper.tryStop(locationId);
+						this.descriptionTextTyper.tryStop(descriptionId);
 					}
 
 					yOffset += circleRadius + this.blockSpacing;
@@ -151,6 +190,7 @@ export class TimelineWidget {
 	tick(frameData) {
 		this.renderEvents(frameData.mouseXY[1]);
 		this.titleTextField.tick(frameData);
-		this.textTyper.tick(frameData);
+		this.locationTextTyper.tick(frameData);
+		this.descriptionTextTyper.tick(frameData);
 	}
 }

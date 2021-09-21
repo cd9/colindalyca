@@ -5,7 +5,7 @@ export class Header {
 		this.ctx = canvas.getContext("2d");
 		this.lineY = 30;
 		this.lineWidth = 2;
-		this.messages = ["welcome to my website!", "good luck scraping it!"];
+		this.messages = ["welcome to my website!", "good luck scraping it!", "I apologize to mobile users"];
 		this.grabGeo();
 		this.configureText();
 		this.measureText();
@@ -32,7 +32,7 @@ export class Header {
 	}
 
 	configureText() {
-		this.ctx.fillStyle = COLOR_THEME.mainText;
+		this.ctx.fillStyle = COLOR_THEME.white;
 		this.ctx.textAlign = "left";
 		this.ctx.font = `20px monospace`;
 	}
