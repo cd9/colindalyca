@@ -6,7 +6,7 @@ export class RainWidget {
 		this.ctx = canvas.getContext("2d");
 		this.numDrops = 10;
 		this.dropGridResolution = 10;
-		this.dropLength = 16;
+		this.dropLength = 20;
 		this.dropY = 0;
 		this.dropSpeed = 4;
 		this.dropSizePeak = 8;
