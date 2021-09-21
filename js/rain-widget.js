@@ -34,13 +34,13 @@ export class RainWidget {
 	}
 
 	renderRect(x, y, size, brightness) {
-		var hue = (x + y)/10 % 256;
+		var hue = ((x + y) / 10) % 256;
+		size *= 0.5 + (Math.abs(((x + y) % 100) - 50) / 50) * 0.5;
 		this.ctx.fillStyle = `hsl(${hue},100%,${brightness}%)`;
 		this.ctx.fillRect(x - size / 2, y - size / 2, size, size);
 	}
 
 	tick(frameData) {
-
 		for (var i = 0; i < this.dropLocations.length; i++) {
 			var xy = this.dropLocations[i];
 			this.ctx.beginPath();
