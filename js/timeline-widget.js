@@ -55,7 +55,7 @@ export class TimelineWidget {
 				"Software Engineering Intern",
 				"Yext",
 				"New York, New York",
-				"Data-intensive microservice management [java]",
+				"Data-intensive microservice development [java]",
 			],
 			[
 				"2018-2019",
