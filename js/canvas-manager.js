@@ -57,6 +57,9 @@ export class CanvasManager {
 		// Website header
 		this.canvasElements.push(new Header(this.canvas));
 
+		// Rain Widget
+		this.canvasElements.push(new RainWidget(this.canvas));
+
 		// Name Widget
 		this.canvasElements.push(new NameWidget(this.canvas));
 

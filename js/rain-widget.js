@@ -5,11 +5,11 @@ export class RainWidget {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.numDrops = 10;
-		this.dropGridResolution = 15;
+		this.dropGridResolution = 10;
 		this.dropLength = 16;
 		this.dropY = 0;
-		this.dropSpeed = 10;
-		this.dropSizePeak = 12;
+		this.dropSpeed = 4;
+		this.dropSizePeak = 8;
 		this.xBlockStart = 200;
 		this.xBlockEnd = canvas.width - 200;
 		this.dropLocations = [];
@@ -34,23 +34,12 @@ export class RainWidget {
 	}
 
 	renderRect(x, y, size, brightness) {
-		var hue = (x + y) % 256;
+		var hue = (x + y)/10 % 256;
 		this.ctx.fillStyle = `hsl(${hue},100%,${brightness}%)`;
 		this.ctx.fillRect(x - size / 2, y - size / 2, size, size);
 	}
 
 	tick(frameData) {
-		this.ctx.fillStyle = "#000000";
-		for (var i = 0; i < this.canvas.width / this.dropGridResolution; i++) {
-			for (var j = 0; j < this.canvas.height / this.dropGridResolution; j++) {
-				this.ctx.fillRect(
-					i * this.dropGridResolution - 2,
-					j * this.dropGridResolution - 2,
-					4,
-				  4	
-				);
-			}
-		}
 
 		for (var i = 0; i < this.dropLocations.length; i++) {
 			var xy = this.dropLocations[i];
