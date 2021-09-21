@@ -77,7 +77,6 @@ export class NameWidget {
 		}
 		var x = offsetX + x * this.blockWidth + (x - 1) * this.blockSpacing;
 		var y = offsetY + y * this.blockWidth + (y - 1) * this.blockSpacing;
-		var hue = ((x + y) / 10 + frame) % 256;
 
 		// If mouse is near, create a bubble effect
 		var mouseXOffset = 0;
@@ -94,6 +93,7 @@ export class NameWidget {
 		}
 		var brightness =
 			50 + Math.max(0, (1 - squareDist / this.mouseDistanceSquared) * 50);
+		var hue = ((x + y) / 10 + frame) % 256;
 		this.ctx.fillStyle = `hsl(${hue},${saturation}%,${brightness}%)`;
 		this.ctx.beginPath();
 		this.ctx.fillRect(

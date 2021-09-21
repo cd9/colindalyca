@@ -5,6 +5,7 @@ import { TextField } from "./text-field.js";
 import { LinkWidget } from "./link-widget.js";
 import { TimelineWidget } from "./timeline-widget.js";
 import { COLOR_THEME } from "./color-theme.js";
+import { RainWidget } from "./rain-widget.js";
 
 export class CanvasManager {
 	constructor() {
@@ -53,11 +54,11 @@ export class CanvasManager {
 		// Reset canvas elements
 		this.canvasElements = [];
 
-		// Create a NameWidget
-		this.canvasElements.push(new NameWidget(this.canvas));
-
 		// Website header
 		this.canvasElements.push(new Header(this.canvas));
+
+		// Name Widget
+		this.canvasElements.push(new NameWidget(this.canvas));
 
 		// Link Bar
 		var linkY = 285;
