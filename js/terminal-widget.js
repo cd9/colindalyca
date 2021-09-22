@@ -43,7 +43,7 @@ export class TerminalWidget {
 			"I currently work for Google in the Bay Area.",
 			"",
 			"I recently graduated from the University of Waterloo,",
-			"  where I studied Computer Science and held 6 internships.",
+			"  where I studied Computer Science and completed 6 internships.",
 			"",
 			"I'm also a game developer and a music enthusiast.",
 			"",
