@@ -26,16 +26,19 @@ export class CanvasManager {
 		window.onload = this.onPageChanged.bind(this);
 		window.onresize = this.onPageChanged.bind(this);
 		window.onmousemove = this.saveMouseCoordinates.bind(this);
-		this.saveMouseCoordinates({ pageX: window.innerWidth / 2, pageY: 700 });
+		this.saveMouseCoordinates({
+			pageX: document.body.clientWidth / 2,
+			pageY: 700,
+		});
 	}
 
 	onPageChanged() {
 		if (
-			this.oldWidth !== window.innerWidth ||
-			this.oldHeight !== window.innerHeight
+			this.oldWidth !== document.body.clientWidth ||
+			this.oldHeight !== document.body.clientHeight
 		) {
-			this.oldWidth = window.innerWidth;
-			this.oldHeight = window.innerHeight;
+			this.oldWidth = document.body.clientWidth;
+			this.oldHeight = document.body.clientHeight;
 			this.initialize();
 		}
 	}
@@ -54,6 +57,7 @@ export class CanvasManager {
 		var frameData = new FrameData(this.frame, this.mouseXY);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
+		console.log(document.body.clientWidth);
 	}
 
 	// Track mouse
@@ -67,8 +71,8 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = Math.max(window.innerHeight, 2800);
+		this.canvas.height = Math.max(document.body.clientHeight, 2800);
+		this.canvas.width = document.body.clientWidth;
 		document.body.appendChild(this.canvas);
 
 		// Save the context
