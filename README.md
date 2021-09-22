@@ -21,3 +21,9 @@ The goal for Personal Website 2.0 is to create a novel personal website that I c
 - Minimal libraries
 - Fun experiments
 - Cool animations, VFX, and user interaction
+
+## TODO
+- [ ] Add projects section (animates and expands with project descriptions)
+- [ ] Animated favicon
+- [ ] Brick breaker game in the background
+- [ ] Ragdoll guy walking around bottom of webpage
