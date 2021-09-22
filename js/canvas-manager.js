@@ -23,19 +23,21 @@ export class CanvasManager {
 		this.oldWidth = 0;
 		this.oldHeight = 0;
 
-		window.onload = this.initialize.bind(this);
-		window.onresize = function () {
-			if (
-				this.oldWidth !== window.innerWidth ||
-				this.oldHeight !== window.innerHeight
-			) {
-				this.oldWidth = window.innerWidth;
-				this.oldHeight = window.innerHeight;
-				this.initialize();
-			}
-		}.bind(this);
+		window.onload = this.onPageChanged.bind(this);
+		window.onresize = this.onPageChanged.bind(this);
 		window.onmousemove = this.saveMouseCoordinates.bind(this);
 		this.saveMouseCoordinates({ pageX: window.innerWidth / 2, pageY: 700 });
+	}
+
+	onPageChanged() {
+		if (
+			this.oldWidth !== window.innerWidth ||
+			this.oldHeight !== window.innerHeight
+		) {
+			this.oldWidth = window.innerWidth;
+			this.oldHeight = window.innerHeight;
+			this.initialize();
+		}
 	}
 
 	// Runs every frame
