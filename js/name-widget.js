@@ -1,3 +1,6 @@
+/*
+Neat bitmap animation to display front-and-center on the screen.
+*/
 export class NameWidget {
 	constructor(canvas) {
 		this.canvas = canvas;

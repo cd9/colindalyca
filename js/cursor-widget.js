@@ -1,3 +1,6 @@
+/*
+Animates planetary circles around the cursor.
+*/
 export class CursorWidget {
 	constructor(canvas) {
 		this.canvas = canvas;

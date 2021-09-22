@@ -1,5 +1,8 @@
 import { COLOR_THEME } from "./color-theme.js";
 
+/*
+Renders a text field and does collision detection and navigation when a click/touch is detected.
+*/
 export class LinkWidget {
 	constructor(canvas, x, y, str, link, fontSize) {
 		this.canvas = canvas;

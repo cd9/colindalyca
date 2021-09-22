@@ -1,5 +1,6 @@
-import { COLOR_THEME } from "./color-theme.js";
-
+/*
+Renders "raindrop" color effects down the screen.
+*/
 export class RainWidget {
 	constructor(canvas) {
 		this.canvas = canvas;

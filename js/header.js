@@ -1,11 +1,19 @@
 import { COLOR_THEME } from "./color-theme.js";
+/*
+A scrolling message header at the top of the screen.
+Also attempts to find user geo information to display as a scrolling message.
+*/
 export class Header {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.lineY = 30;
 		this.lineWidth = 3;
-		this.messages = ["welcome to my website!", "good luck scraping it!", "I apologize to mobile users"];
+		this.messages = [
+			"welcome to my website!",
+			"good luck scraping it!",
+			"I apologize to mobile users",
+		];
 		this.grabGeo();
 		this.configureText();
 		this.measureText();

@@ -1,3 +1,6 @@
+/*
+Simple widget to render a text field.
+*/
 export class TextField {
 	constructor(canvas, str, x, y, fontSize, fontColor, textAlign) {
 		this.canvas = canvas;

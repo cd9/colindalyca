@@ -2,6 +2,9 @@ import { COLOR_THEME } from "./color-theme.js";
 import { TextField } from "./text-field.js";
 import { TextTyper } from "./text-typer.js";
 
+/*
+Renders a fake terminal that opens a vim session and types out welcome messages
+*/
 export class TerminalWidget {
 	constructor(canvas) {
 		this.canvas = canvas;
@@ -45,6 +48,7 @@ export class TerminalWidget {
 		this.animationFrame = 0;
 	}
 
+	// Renders the terminal window
 	renderWindow(frameData) {
 		this.ctx.strokeStyle = COLOR_THEME.lines;
 		this.ctx.fillStyle = COLOR_THEME.dark;
@@ -83,6 +87,7 @@ export class TerminalWidget {
 		this.barTextField.tick(frameData);
 	}
 
+	// Renders the vim background and hint footer
 	renderVimBackground(x, y, cursorX, cursorY, insert, nonBlankLines) {
 		var buildTextField = function (str, lineNumber, color) {
 			return new TextField(
@@ -118,6 +123,7 @@ export class TerminalWidget {
 		);
 	}
 
+	// Sequentially types out all welcome message strings
 	renderVimAnimation(frameData) {
 		var frame = this.animationFrame;
 		var xOffset = this.windowX + this.windowMargin;
@@ -127,6 +133,7 @@ export class TerminalWidget {
 		var cursorY = 1;
 
 		if (frame == 0) {
+			// FRAME 0
 			// Initialize prompt text field
 			var promptString = "cjdaly@cjdalyca:~#   ";
 			this.promptTextField = new TextField(
@@ -140,9 +147,11 @@ export class TerminalWidget {
 			);
 			this.promptWidth = this.ctx.measureText(promptString).width;
 		} else if (frame < 120) {
+			// FRAMES 1-119
 			// Render prompt text field
 			this.promptTextField.tick(frameData);
 
+			// FRAME 60
 			// Render prompt input
 			if (frame == 60) {
 				this.promptTextTyper = new TextTyper(
@@ -156,9 +165,12 @@ export class TerminalWidget {
 			}
 			this.promptTextTyper?.tick(frameData);
 		} else {
+			// FRAMES 120+
 			if (frame == 120) {
+				// FRAME 120
 				this.promptTextTyper.tryStop("init");
 			} else if (frame == 160) {
+				// FRAME 160
 				// Spawn all TextTypers
 				var numMessages = this.welcomeMessage.length;
 				for (var i = 0; i < numMessages; i++) {

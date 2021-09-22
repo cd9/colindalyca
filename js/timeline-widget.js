@@ -2,6 +2,10 @@ import { COLOR_THEME } from "./color-theme.js";
 import { TextField } from "./text-field.js";
 import { TextTyper } from "./text-typer.js";
 
+/*
+Widget that displays career timeline information in a vertical graphic.
+Reacts to mouse and types out text when a timeline node is overlapped.
+*/
 export class TimelineWidget {
 	constructor(canvas) {
 		this.canvas = canvas;

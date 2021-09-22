@@ -1,3 +1,4 @@
+// Struct to centralize all color options
 export var COLOR_THEME = {
 	background: "#242424",
 	dark: "#050505",

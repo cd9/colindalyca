@@ -8,6 +8,10 @@ import { COLOR_THEME } from "./color-theme.js";
 import { RainWidget } from "./rain-widget.js";
 import { TerminalWidget } from "./terminal-widget.js";
 
+/*
+Sets up a canvas in the DOM.
+Manages layout and rendering.
+*/
 export class CanvasManager {
 	constructor() {
 		this.canvas = null;
@@ -28,8 +32,12 @@ export class CanvasManager {
 		// Clear canvas every frame
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.ctx.beginPath();
+
+		// Fill background
 		this.ctx.fillStyle = COLOR_THEME.background;
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+		// Call tick event on every canvas element
 		var frameData = new FrameData(this.frame, this.mouseXY);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
@@ -67,6 +75,9 @@ export class CanvasManager {
 
 		// Terminal Widget
 		this.canvasElements.push(new TerminalWidget(this.canvas));
+
+		// Timeline Widget
+		this.canvasElements.push(new TimelineWidget(this.canvas));
 
 		// Link Bar
 		var linkY = 295;
@@ -109,8 +120,6 @@ export class CanvasManager {
 			)
 		);
 
-		this.canvasElements.push(new TimelineWidget(this.canvas));
-
 		// Footer message
 		this.canvasElements.push(
 			new TextField(
@@ -123,7 +132,7 @@ export class CanvasManager {
 			)
 		);
 
-		// Tick clock for 40fps rendering
+		// Initialize clock for 40fps rendering
 		if (this.clock) {
 			clearInterval(this.clock);
 		}

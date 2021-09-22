@@ -1,5 +1,8 @@
 import { COLOR_THEME } from "./color-theme.js";
 
+/*
+Widget that types out a string character-by-character.
+*/
 export class TextTyper {
 	constructor(canvas, fontSize, fontColor, showVimBlock) {
 		this.canvas = canvas;
