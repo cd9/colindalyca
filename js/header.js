@@ -13,6 +13,7 @@ export class Header {
 			"welcome to my website!",
 			"good luck scraping it!",
 			"I apologize to mobile users",
+			"Try dragging around the terminal!",
 		];
 		this.grabGeo();
 		this.configureText();
