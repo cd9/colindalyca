@@ -1,6 +1,10 @@
 # Personal Website
 
-## Foreword
+## Link
+
+[Visit colindaly.ca](https://colindaly.ca)
+
+## Motivation
 
 I've always has a personal website, but it's admittedly been nothing more than a generic project index. The only merit it had was that I didn't use a template. It was built in AngularJS, which has since gone through dozens of updates, making my website now officially **_old and lame!_**.
 
