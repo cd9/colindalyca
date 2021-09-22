@@ -44,7 +44,7 @@ export class TerminalWidget {
 			"I'm also a recent graduate from the University of Waterloo,",
 			"  where I studied Computer Science (Co-op).",
 			"",
-			"I've worked at companies at companies like Google, Splunk, and Yext.",
+			"I've worked at at companies like Google, Splunk, and Yext.",
 			"",
 			"I'm also a game developer and a music enthusiast.",
 			"",
