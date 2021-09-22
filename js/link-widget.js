@@ -23,7 +23,6 @@ export class LinkWidget {
 		this.yEnd = y + fontSize * 0.75;
 
 		window.addEventListener("click", this.onClick.bind(this));
-		window.addEventListener("touchstart", this.onTouch.bind(this));
 	}
 
 	onClick(e) {
