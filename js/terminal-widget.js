@@ -42,7 +42,7 @@ export class TerminalWidget {
 			"My name is Colin, I'm a Software Engineer from Canada.",
 			"",
 			"I'm also a recent graduate from the University of Waterloo,",
-			"  where I studied Computer Science (Co-op).",
+			"  where I studied Computer Science.",
 			"",
 			"I've worked at companies like Google, Splunk, and Yext.",
 			"",
