@@ -6,6 +6,7 @@ import { LinkWidget } from "./link-widget.js";
 import { TimelineWidget } from "./timeline-widget.js";
 import { COLOR_THEME } from "./color-theme.js";
 import { RainWidget } from "./rain-widget.js";
+import { TerminalWidget } from "./terminal-widget.js";
 
 export class CanvasManager {
 	constructor() {
@@ -26,6 +27,7 @@ export class CanvasManager {
 	runClock() {
 		// Clear canvas every frame
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.beginPath();
 		this.ctx.fillStyle = COLOR_THEME.background;
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		var frameData = new FrameData(this.frame, this.mouseXY);
@@ -45,7 +47,7 @@ export class CanvasManager {
 		}
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = window.innerWidth;
-		this.canvas.height = Math.max(window.innerHeight, 2200);
+		this.canvas.height = Math.max(window.innerHeight, 2800);
 		document.body.appendChild(this.canvas);
 
 		// Save the context
@@ -63,8 +65,11 @@ export class CanvasManager {
 		// Name Widget
 		this.canvasElements.push(new NameWidget(this.canvas));
 
+		// Terminal Widget
+		this.canvasElements.push(new TerminalWidget(this.canvas));
+
 		// Link Bar
-		var linkY = 285;
+		var linkY = 295;
 		var linkX = this.canvas.width / 2;
 		var linkSize = 25;
 
@@ -110,7 +115,7 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new TextField(
 				this.canvas,
-				"This website was built from scratch using native HTML5 Canvas :^)",
+				"This website was built from scratch using native HTML Canvas :^)",
 				this.canvas.width / 2,
 				this.canvas.height - 30,
 				16,

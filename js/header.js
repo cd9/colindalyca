@@ -4,7 +4,7 @@ export class Header {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.lineY = 30;
-		this.lineWidth = 2;
+		this.lineWidth = 3;
 		this.messages = ["welcome to my website!", "good luck scraping it!", "I apologize to mobile users"];
 		this.grabGeo();
 		this.configureText();

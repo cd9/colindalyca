@@ -1,7 +1,7 @@
 import { COLOR_THEME } from "./color-theme.js";
 
 export class TextTyper {
-	constructor(canvas, fontSize, fontColor) {
+	constructor(canvas, fontSize, fontColor, showVimBlock) {
 		this.canvas = canvas;
 		this.fontColor = fontColor;
 		this.ctx = canvas.getContext("2d");
@@ -15,6 +15,11 @@ export class TextTyper {
 		this.charsPerFrame = 1;
 		this.cursorWidth = 10;
 		this.blinkPeriod = 30;
+		if (showVimBlock !== undefined) {
+			this.showVimBlock = showVimBlock;
+		} else {
+			this.showVimBlock = true;
+		}
 	}
 
 	position(x, y) {
@@ -58,8 +63,10 @@ export class TextTyper {
 		// Draw a blinking cursor
 		var fullyTyped = this.str == this.typedString;
 		if (
-			!fullyTyped ||
-			(fullyTyped && Math.ceil(frameData.frame / this.blinkPeriod) % 2 == 0)
+			(!fullyTyped ||
+				(fullyTyped &&
+					Math.ceil(frameData.frame / this.blinkPeriod) % 2 == 0)) &&
+			!(!this.showVimBlock && fullyTyped)
 		) {
 			var cursorWidth = fullyTyped ? this.cursorWidth : 2;
 			var measuredWidth = this.ctx.measureText(this.typedString).width;

@@ -6,7 +6,7 @@ export class TimelineWidget {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.yStart = 375;
+		this.yStart = 800;
 		this.xStart = canvas.width / 2 - 200;
 
 		this.titleTextField = new TextField(
