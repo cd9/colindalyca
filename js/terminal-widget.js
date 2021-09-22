@@ -275,13 +275,15 @@ export class TerminalWidget {
 	}
 
 	tick(frameData) {
+		// Update mouse
 		this.mouseXY = frameData.mouseXY;
 		this.updateMouseOverlap();
 		this.positionWindow();
+
 		this.renderWindow(frameData);
+		this.renderVimAnimation(frameData);
 		this.vimTextFields.forEach((t) => t.tick(frameData));
 		this.vimTextTypers.forEach((t) => t.tick(frameData));
-		this.renderVimAnimation(frameData);
 		this.animationFrame++;
 	}
 }
