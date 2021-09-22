@@ -13,13 +13,25 @@ export class TerminalWidget {
 		// Window
 		this.windowWidth = 800;
 		this.windowHeight = 450;
-		this.windowX = this.canvas.width / 2 - this.windowWidth / 2;
-		this.windowY = 325;
 		this.outlineWidth = 3;
 		this.windowBarWidth = 20;
 		this.windowBarFontSize = 16;
 		this.windowBarString = "cdaly@cdalyca: ~";
 		this.windowMargin = 5;
+
+		// State for moving window
+		this.overlappingWindow = false;
+		this.draggingWindow = false;
+		this.targetWindowX = this.canvas.width / 2 - this.windowWidth / 2;
+		this.targetWindowY = 325;
+		this.windowX = this.targetWindowX;
+		this.windowY = this.targetWindowY;
+		this.mouseXY = [0, 0];
+		this.mouseXYOffset = [0, 0];
+
+		// Events
+		window.addEventListener("mousedown", this.onMouseDown.bind(this));
+		window.addEventListener("mouseup", this.onMouseUp.bind(this));
 
 		// Terminal
 		this.fontSize = 17;
@@ -45,12 +57,48 @@ export class TerminalWidget {
 			"                                      \\      ^..^",
 			"                                       \\_____/\\_\\",
 			"                                       /\\   /\\   -ARF!",
-			"                                      /  \\ /  \\ "
+			"                                      /  \\ /  \\ ",
 		];
 
 		this.vimTextFields = [];
 		this.vimTextTypers = [];
 		this.animationFrame = 0;
+	}
+
+	positionWindow() {
+		if (this.draggingWindow) {
+			this.windowX = this.mouseXY[0] + this.mouseXYOffset[0];
+			this.windowY = this.mouseXY[1] + this.mouseXYOffset[1];
+		} else {
+			this.windowX = this.windowX + (this.targetWindowX - this.windowX) * 0.05;
+			this.windowY = this.windowY + (this.targetWindowY - this.windowY) * 0.05;
+		}
+	}
+
+	updateMouseOverlap() {
+		var mx = this.mouseXY[0];
+		var my = this.mouseXY[1];
+		this.overlappingWindow =
+			mx >= this.windowX &&
+			mx <= this.windowX + this.windowWidth &&
+			my >= this.windowY &&
+			my <= this.windowY + this.windowHeight;
+	}
+
+	onMouseDown() {
+		if (this.overlappingWindow) {
+			if (!this.draggingWindow) {
+				this.mouseXYOffset = [
+					this.windowX - this.mouseXY[0],
+					this.windowY - this.mouseXY[1],
+				];
+				this.draggingWindow = true;
+			}
+		}
+	}
+
+	onMouseUp() {
+		this.draggingWindow = false;
 	}
 
 	// Renders the terminal window
@@ -78,18 +126,15 @@ export class TerminalWidget {
 			this.windowWidth,
 			this.windowBarWidth
 		);
-		if (!this.barTextField) {
-			this.barTextField = new TextField(
-				this.canvas,
-				this.windowBarString,
-				this.windowX + this.outlineWidth,
-				this.windowY + 14,
-				this.windowBarFontSize,
-				COLOR_THEME.dark,
-				"left"
-			);
-		}
-		this.barTextField.tick(frameData);
+		new TextField(
+			this.canvas,
+			this.windowBarString,
+			this.windowX + this.outlineWidth,
+			this.windowY + 14,
+			this.windowBarFontSize,
+			COLOR_THEME.dark,
+			"left"
+		).tick(frameData);
 	}
 
 	// Renders the vim background and hint footer
@@ -106,10 +151,10 @@ export class TerminalWidget {
 			);
 		}.bind(this);
 
-		if (this.vimTextFields.length == 0) {
-			for (var i = 0; i < this.totalLines; i++) {
-				this.vimTextFields.push(buildTextField("~", i, COLOR_THEME.blue));
-			}
+		this.vimTextFields = [];
+
+		for (var i = 0; i < this.totalLines; i++) {
+			this.vimTextFields.push(buildTextField("~", i, COLOR_THEME.blue));
 		}
 
 		for (var i = 0; i < nonBlankLines; i++) {
@@ -137,11 +182,11 @@ export class TerminalWidget {
 		var cursorX = 0;
 		var cursorY = 1;
 
-		if (frame == 0) {
-			// FRAME 0
-			// Initialize prompt text field
+		if (frame < 120) {
+			// FRAMES 0-119
+			// Render prompt text field
 			var promptString = "cjdaly@cjdalyca:~#   ";
-			this.promptTextField = new TextField(
+			new TextField(
 				this.canvas,
 				promptString,
 				xOffset,
@@ -149,12 +194,8 @@ export class TerminalWidget {
 				this.fontSize,
 				COLOR_THEME.terminalGreen,
 				"left"
-			);
+			).tick(frameData);
 			this.promptWidth = this.ctx.measureText(promptString).width;
-		} else if (frame < 120) {
-			// FRAMES 1-119
-			// Render prompt text field
-			this.promptTextField.tick(frameData);
 
 			// FRAME 60
 			// Render prompt input
@@ -165,12 +206,11 @@ export class TerminalWidget {
 					COLOR_THEME.white,
 					false
 				);
-				this.promptTextTyper.position(xOffset + this.promptWidth, yOffset);
 				this.promptTextTyper.tryStart("vim welcome-message.txt", "init");
 			}
+			this.promptTextTyper?.position(xOffset + this.promptWidth, yOffset);
 			this.promptTextTyper?.tick(frameData);
 		} else {
-			// FRAMES 120+
 			if (frame == 120) {
 				// FRAME 120
 				this.promptTextTyper.tryStop("init");
@@ -235,6 +275,9 @@ export class TerminalWidget {
 	}
 
 	tick(frameData) {
+		this.mouseXY = frameData.mouseXY;
+		this.updateMouseOverlap();
+		this.positionWindow();
 		this.renderWindow(frameData);
 		this.vimTextFields.forEach((t) => t.tick(frameData));
 		this.vimTextTypers.forEach((t) => t.tick(frameData));
