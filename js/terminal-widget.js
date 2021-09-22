@@ -27,9 +27,9 @@ export class TerminalWidget {
 		this.totalLines = 21;
 		this.welcomeMessage = [
 			"Welcome to my website!",
-			"My name is Colin, a Software Engineer from Canada.",
+			"My name is Colin, I'm a Software Engineer from Canada.",
 			"",
-			"I'm a recent graduate from the University of Waterloo,",
+			"I'm also a recent graduate from the University of Waterloo,",
 			"  where I studied Computer Science (Co-op).",
 			"",
 			"I've worked all across the Bay Area and New York,",
@@ -37,9 +37,10 @@ export class TerminalWidget {
 			"",
 			"I'm also a game developer and a music enthusiast.",
 			"",
-			"This website was created entirely using HTML Canvas and no external libraries",
+			"This website was created entirely with HTML Canvas and no external libraries.",
 			"",
 			"Want to get in touch? Drop me a line at dalyco884@gmail.com",
+			"",
 			"Thanks for visiting my website! ",
 		];
 
