@@ -135,11 +135,11 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new TextField(
 				this.canvas,
-				"This website was built from scratch using native HTML Canvas :^)",
+				"This website was build entirely with HTML Canvas",
 				this.canvas.width / 2,
 				this.canvas.height - 30,
 				16,
-				COLOR_THEME.lightOrange
+				COLOR_THEME.purple
 			)
 		);
 
