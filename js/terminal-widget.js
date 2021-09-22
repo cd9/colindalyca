@@ -39,7 +39,7 @@ export class TerminalWidget {
 			"",
 			"This website was created entirely with HTML Canvas and no external libraries.",
 			"",
-			"Want to get in touch? Drop me a line at dalyco884@gmail.com",
+			"Want to get in touch? Drop me a line at dalyco884@gmail.com.",
 			"",
 			"Thanks for visiting my website! ",
 		];
