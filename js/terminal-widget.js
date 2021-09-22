@@ -12,7 +12,7 @@ export class TerminalWidget {
 
 		// Window
 		this.windowWidth = 800;
-		this.windowHeight = 410;
+		this.windowHeight = 450;
 		this.windowX = this.canvas.width / 2 - this.windowWidth / 2;
 		this.windowY = 325;
 		this.outlineWidth = 3;
@@ -24,7 +24,7 @@ export class TerminalWidget {
 		// Terminal
 		this.fontSize = 17;
 		this.lineGap = 1;
-		this.totalLines = 21;
+		this.totalLines = 23;
 		this.welcomeMessage = [
 			"Welcome to my website!",
 			"My name is Colin, I'm a Software Engineer from Canada.",
@@ -42,6 +42,10 @@ export class TerminalWidget {
 			"Want to get in touch? Drop me a line at dalyco884@gmail.com.",
 			"",
 			"Thanks for visiting my website! ",
+			"                                      \\      ^..^",
+			"                                       \\_____/\\_\\",
+			"                                       /\\   /\\   -ARF!",
+			"                                      /  \\ /  \\ "
 		];
 
 		this.vimTextFields = [];
@@ -115,8 +119,8 @@ export class TerminalWidget {
 		// Last line
 		var lastIndex = this.vimTextFields.length - 1;
 		var footer = insert
-			? `-- INSERT --                                                      ${cursorY},${cursorX}     All`
-			: `"welcome-message.txt" [New File]                                  0,0-1     All`;
+			? `-- INSERT --                                                 ${cursorY},${cursorX}     All`
+			: `"welcome-message.txt" [New File]                             0,0-1     All`;
 		this.vimTextFields[lastIndex] = buildTextField(
 			footer,
 			lastIndex,
