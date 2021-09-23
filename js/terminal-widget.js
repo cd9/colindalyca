@@ -40,7 +40,6 @@ export class TerminalWidget {
 		this.welcomeMessage = [
 			"Welcome to my website!",
 			"My name is Colin, I'm a Software Engineer from Canada.",
-			"I currently work for Google in the Bay Area.",
 			"",
 			"I recently graduated from the University of Waterloo,",
 			"where I studied Computer Science and completed 6 internships.",
