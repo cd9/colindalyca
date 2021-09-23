@@ -108,7 +108,7 @@ export class CanvasManager {
 				linkX - 75,
 				linkY,
 				">Github",
-				"https://github.com/cdaly333",
+				"https://github.com/cd3",
 				linkSize
 			)
 		);
