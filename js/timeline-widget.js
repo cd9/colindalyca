@@ -62,7 +62,14 @@ export class TimelineWidget {
 				"Data-intensive microservice development [java]",
 			],
 			[
-				"2018-2019",
+				"2019",
+				"Software Engineering Intern",
+				"Splunk",
+				"Santa Clara, California",
+				"VR & AR app development [C#, Unity, javascript]",
+			],
+			[
+				"2018",
 				"Software Engineering Intern",
 				"Splunk",
 				"Santa Clara, California",
@@ -153,8 +160,8 @@ export class TimelineWidget {
 					);
 
 					// Save animation ids
-					var locationId = event[1] + event[2];
-					var descriptionId = event[1] + event[4];
+					var locationId = event[0] + event[1] + event[2];
+					var descriptionId = event[0] + event[1] + event[4];
 					if (selected) {
 						// Render location and description with a textTyper
 						this.locationTextTyper.tryStart(event[3], locationId);

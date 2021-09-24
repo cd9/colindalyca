@@ -57,7 +57,6 @@ export class CanvasManager {
 		var frameData = new FrameData(this.frame, this.mouseXY);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
-		console.log(document.body.clientWidth);
 	}
 
 	// Track mouse
@@ -71,7 +70,7 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.height = Math.max(document.body.clientHeight, 2800);
+		this.canvas.height = Math.max(document.body.clientHeight, 3200);
 		this.canvas.width = document.body.clientWidth;
 		document.body.appendChild(this.canvas);
 
