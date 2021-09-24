@@ -39,7 +39,7 @@ export class TerminalWidget {
 		this.totalLines = 23;
 		this.welcomeMessage = [
 			"Welcome to my website!",
-			"My name is Colin, I'm a Software Engineer from Canada.",
+			"My name is Colin, and I'm a Software Engineer from Canada.",
 			"",
 			"I recently graduated from the University of Waterloo,",
 			"where I studied Computer Science and completed 6 internships.",
