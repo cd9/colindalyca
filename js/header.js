@@ -26,13 +26,13 @@ export class Header {
 	}
 
 	grabGeo() {
-		fetch("http://ip-api.com/json").then((response) => {
+		fetch("https://ipapi.co/json").then((response) => {
 			response.json().then((json) => {
 				var city = json.city;
 				var region = json.region;
-				var zip = json.zip;
-				if (city && region && zip) {
-					var message = `it appears you are in ${json.city}, ${json.region}, ${json.country}, ${json.zip} - you should use an ad blocker and a VPN!`;
+				var country = json.country;
+				if (city && region && country) {
+					var message = `it appears you are in ${city}, ${region}, ${country} - you should use an ad blocker and a VPN!`;
 					this.messages.push(message);
 					this.measureText();
 				}
