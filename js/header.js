@@ -26,7 +26,7 @@ export class Header {
 	}
 
 	grabGeo() {
-		fetch("https://ip-api.com/json").then((response) => {
+		fetch("http://ip-api.com/json").then((response) => {
 			response.json().then((json) => {
 				var city = json.city;
 				var region = json.region;
