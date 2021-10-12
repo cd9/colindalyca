@@ -89,12 +89,6 @@ export class CanvasManager {
 		// Name Widget
 		this.canvasElements.push(new NameWidget(this.canvas));
 
-		// Terminal Widget
-		this.canvasElements.push(new TerminalWidget(this.canvas));
-
-		// Timeline Widget
-		this.canvasElements.push(new TimelineWidget(this.canvas));
-
 		// Link Bar
 		var linkY = 295;
 		var linkX = this.canvas.width / 2;
@@ -123,6 +117,12 @@ export class CanvasManager {
 				linkSize
 			)
 		);
+
+		// Terminal Widget
+		this.canvasElements.push(new TerminalWidget(this.canvas));
+
+		// Timeline Widget
+		this.canvasElements.push(new TimelineWidget(this.canvas));
 
 		// Source Code Link
 		this.canvasElements.push(
