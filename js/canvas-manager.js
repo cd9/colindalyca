@@ -40,7 +40,6 @@ export class CanvasManager {
 			window.addEventListener(
 				"scroll",
 				function () {
-					console.log("scroll");
 					var scrollTop =
 						window.pageYOffset || document.documentElement.scrollTop;
 					this.saveMouseCoordinates({
