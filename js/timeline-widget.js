@@ -22,7 +22,7 @@ export class TimelineWidget {
 			COLOR_THEME.green
 		);
 		this.blocksPerEvent = 9;
-		this.blockHeight = 15;
+		this.blockHeight = 20;
 		this.circleRadius = 8;
 		this.blockWidth = 4;
 		this.blockSpacing = 12;

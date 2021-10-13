@@ -30,6 +30,26 @@ export class CanvasManager {
 			pageX: document.body.clientWidth / 2,
 			pageY: 700,
 		});
+
+		// If mobile device, track scrolling
+		if (
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+				navigator.userAgent
+			)
+		) {
+			window.addEventListener(
+				"scroll",
+				function () {
+					console.log("scroll");
+					var scrollTop =
+						window.pageYOffset || document.documentElement.scrollTop;
+					this.saveMouseCoordinates({
+						pageX: document.body.clientWidth / 2,
+						pageY: scrollTop + window.innerHeight / 3,
+					});
+				}.bind(this)
+			);
+		}
 	}
 
 	onPageChanged() {
@@ -70,7 +90,7 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 		this.canvas = document.createElement("canvas");
-		this.canvas.height = Math.max(document.body.clientHeight, 3200);
+		this.canvas.height = Math.max(document.body.clientHeight, 4500);
 		this.canvas.width = document.body.clientWidth;
 		document.body.appendChild(this.canvas);
 
