@@ -7,6 +7,7 @@ import { TimelineWidget } from "./timeline-widget.js";
 import { COLOR_THEME } from "./color-theme.js";
 import { RainWidget } from "./rain-widget.js";
 import { TerminalWidget } from "./terminal-widget.js";
+import { LetterSpillWidget } from "./letter-spill-widget.js";
 
 /*
 Sets up a canvas in the DOM.
@@ -40,15 +41,17 @@ export class CanvasManager {
 			window.addEventListener(
 				"scroll",
 				function () {
-					var scrollTop =
-						window.pageYOffset || document.documentElement.scrollTop;
 					this.saveMouseCoordinates({
 						pageX: document.body.clientWidth / 2,
-						pageY: scrollTop + window.innerHeight / 3,
+						pageY: this.getScrollTop() + window.innerHeight / 3,
 					});
 				}.bind(this)
 			);
 		}
+	}
+
+	getScrollTop() {
+		return window.pageYOffset || document.documentElement.scrollTop;
 	}
 
 	onPageChanged() {
@@ -73,7 +76,11 @@ export class CanvasManager {
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
 		// Call tick event on every canvas element
-		var frameData = new FrameData(this.frame, this.mouseXY);
+		var frameData = new FrameData(
+			this.frame,
+			this.mouseXY,
+			this.getScrollTop()
+		);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
 	}
@@ -142,6 +149,9 @@ export class CanvasManager {
 
 		// Timeline Widget
 		this.canvasElements.push(new TimelineWidget(this.canvas));
+
+		// Timeline Widget
+		this.canvasElements.push(new LetterSpillWidget(this.canvas));
 
 		// Source Code Link
 		this.canvasElements.push(

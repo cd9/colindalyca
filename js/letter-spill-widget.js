@@ -13,9 +13,9 @@ export class LetterSpillWidget {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.anchorX = canvas.width / 2;
-		this.anchorY = 2900;
-		this.textOffsetX = -250;
-		this.textOffsetY = 500;
+		this.anchorY = 3200;
+		this.textOffsetX = -400;
+		this.textOffsetY = 300;
 		this.mouseXY = [0, 0];
 
 		this.blurbs = [
@@ -30,12 +30,12 @@ export class LetterSpillWidget {
 					"form of something that will be interactive, immersive, and entertaining",
 					"for others.",
 					"",
-					"Over the years, I've published a few games to the Play Store. Most of them",
-					"have been taken down since, but I'm constantly working on new projects.",
+					"Over the years, I've published a few games to the Play Store. I've taken",
+					"most of them down since, but I'm constantly working on new projects.",
 				],
 			],
 			[
-				"This Website",
+				"Website",
 				[
 					"This website was built entirely in HTML Canvas.",
 					"",
@@ -81,9 +81,9 @@ export class LetterSpillWidget {
 		this.containerWidth = 100;
 		this.containerHeight = 100;
 		this.containerLineWidth = 6;
-		this.blurbLineHeight = 20;
+		this.blurbLineHeight = 25;
 		this.blurbTitleSize = 20;
-		this.blurbLetterSize = 30;
+		this.blurbLetterSize = 20;
 		this.lerpValue = 0.1;
 
 		// State
@@ -98,6 +98,9 @@ export class LetterSpillWidget {
 
 	onClick() {
 		this.selectedBlurbIndex = this.overlappedBlurbIndex;
+		if (this.selectedBlurbIndex != -1) {
+			this.currentPositions = null;
+		}
 	}
 
 	getBlurbPoints(i) {
@@ -109,91 +112,87 @@ export class LetterSpillWidget {
 	}
 
 	renderLetters(frameData) {
-		for (var i = 0; i < this.blurbs.length; i++) {
-			var blurb = this.blurbs[i];
-      var blurbPoints = this.getBlurbPoints(i);
- 
-			// Initialize letter positions
-			if (this.currentPositions.length <= i) {
-				var letterPositions = [];
-				// For each line
-				for (var j = 0; j < blurb[1].length; j++) {
-					var line = blurb[1][j];
-					// For each character in each line
-					for (var k = 0; k < line.length; k++) {
-						var randX =
-							blurbPoints.x1 +
-							this.containerLineWidth +
-							Math.random() *
-								(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
-						var randY =
-							blurbPoints.y1 +
-							this.containerLineWidth +
-							(0.25 + Math.random() * 0.75) *
-								(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
-						var randRotation = Math.random() * 360;
-						letterPositions.push({
-							letter: line[k],
-							x: randX,
-							y: randY,
-							rotation: randRotation,
-						});
-					}
-				}
-				this.currentPositions.push(letterPositions);
-			}
+		if (this.selectedBlurbIndex == -1) {
+			return;
+		}
+		var blurb = this.blurbs[this.selectedBlurbIndex];
+		var blurbPoints = this.getBlurbPoints(this.selectedBlurbIndex);
 
-			if (i == this.selectedBlurbIndex) {
-				// Get width of a single character
-				var singleWidth = new TextField(
-					this.canvas,
-					"a",
-					0,
-					0,
-					this.blurbLetterSize,
-					COLOR_THEME.white
-				).getWidth();
-
-				// For each line
-				var letterIndex = 0;
-				for (var j = 0; j < blurb[1].length; j++) {
-					var line = blurb[1][j];
-
-					// For each character in each line
-					for (var k = 0; k < line.length; k++) {
-						var letterPosition = this.currentPositions[i][letterIndex];
-						var targetX = (k + 0.5) * singleWidth + this.anchorX + this.textOffsetX;
-						var targetY = j * this.blurbLineHeight + this.anchorY + this.textOffsetY;
-						this.currentPositions[i][letterIndex] = {
-							letter: line[k],
-							x:
-								letterPosition.x +
-								(targetX - letterPosition.x) * this.lerpValue,
-							y:
-								letterPosition.y +
-								(targetY - letterPosition.y) * this.lerpValue,
-							rotation: letterPosition.rotation * (1-this.lerpValue),
-						};
-						letterIndex++;
-					}
+		// Initialize letter positions
+		if (this.currentPositions === null) {
+			var letterPositions = [];
+			// For each line
+			for (var j = 0; j < blurb[1].length; j++) {
+				var line = blurb[1][j];
+				// For each character in each line
+				for (var k = 0; k < line.length; k++) {
+					var randX =
+						blurbPoints.x1 +
+						this.containerLineWidth +
+						Math.random() *
+							(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
+					var randY =
+						blurbPoints.y1 +
+						this.containerLineWidth +
+						(0.25 + Math.random() * 0.75) *
+							(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
+					var randRotation = Math.random() * 360;
+					letterPositions.push({
+						letter: line[k],
+						x: randX,
+						y: randY,
+						rotation: randRotation,
+					});
 				}
 			}
+			this.currentPositions = letterPositions;
+		}
 
-			// Render letters
-			var letterPositions = this.currentPositions[i];
-			for (var j = 0; j < letterPositions.length; j++) {
-				var letterPosition = letterPositions[j];
-				new TextField(
-					this.canvas,
-					letterPosition.letter,
-					letterPosition.x,
-					letterPosition.y,
-					this.blurbLetterSize,
-					COLOR_THEME.white,
-					"center",
-					letterPosition.rotation
-				).tick(frameData);
+		// Get width of a single character
+		var singleWidth = new TextField(
+			this.canvas,
+			"a",
+			0,
+			0,
+			this.blurbLetterSize,
+			COLOR_THEME.white
+		).getWidth();
+
+		// For each line
+		var letterIndex = 0;
+		for (var j = 0; j < blurb[1].length; j++) {
+			var line = blurb[1][j];
+
+			// For each character in each line
+			for (var k = 0; k < line.length; k++) {
+				var letterPosition = this.currentPositions[letterIndex];
+				var targetX = (k + 0.5) * singleWidth + this.anchorX + this.textOffsetX;
+				var targetY =
+					j * this.blurbLineHeight + this.anchorY + this.textOffsetY;
+				this.currentPositions[letterIndex] = {
+					letter: line[k],
+					x: letterPosition.x + (targetX - letterPosition.x) * this.lerpValue,
+					y: letterPosition.y + (targetY - letterPosition.y) * this.lerpValue,
+					rotation: letterPosition.rotation * (1 - this.lerpValue),
+				};
+				letterIndex++;
 			}
+		}
+
+		// Render letters
+		var letterPositions = this.currentPositions;
+		for (var j = 0; j < letterPositions.length; j++) {
+			var letterPosition = letterPositions[j];
+			new TextField(
+				this.canvas,
+				letterPosition.letter,
+				letterPosition.x,
+				letterPosition.y,
+				this.blurbLetterSize,
+				COLOR_THEME.white,
+				"center",
+				letterPosition.rotation
+			).tick(frameData);
 		}
 	}
 
@@ -234,7 +233,7 @@ export class LetterSpillWidget {
 				this.canvas,
 				blurb[0],
 				blurbPoints.x1 + (blurbPoints.x2 - blurbPoints.x1) / 2,
-				blurbPoints.y1 - 10,
+				blurbPoints.y1 + this.containerHeight/2,
 				this.blurbTitleSize,
 				COLOR_THEME.purple,
 				"center"
@@ -261,6 +260,10 @@ export class LetterSpillWidget {
 
 	tick(frameData) {
 		// Update mouse
+		if (frameData.scrollTop + window.innerHeight <= this.anchorY - 100) {
+			console.log("Skip render");
+			return;
+		}
 		this.mouseXY = frameData.mouseXY;
 		this.checkOverlaps();
 		this.renderTitle();

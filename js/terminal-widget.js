@@ -272,6 +272,10 @@ export class TerminalWidget {
 	}
 
 	tick(frameData) {
+		// If bounds, off screen, pause and stop rendering
+		if (frameData.scrollTop >= this.targetWindowY + this.windowHeight) {
+			return;
+		}
 		// Update mouse
 		this.mouseXY = frameData.mouseXY;
 		this.updateMouseOverlap();

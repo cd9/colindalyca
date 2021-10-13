@@ -32,6 +32,8 @@ export class NameWidget {
 		var height = (letters.length + 2 * margin) * scaleFactor;
 		var width = (letters[0].length + 2 * margin) * scaleFactor;
 
+		this.offsetY = 75;
+
 		this.blockWidth = 10;
 		this.blockSpacing = 1;
 		this.mouseDistance = 300;
@@ -108,6 +110,13 @@ export class NameWidget {
 	}
 
 	tick(frameData) {
+		// If off screen, stop rendering
+		if (
+			frameData.scrollTop >=
+			this.offsetY + (this.blockWidth + this.blockSpacing) * this.matrix.length
+		) {
+			return;
+		}
 		// Draw bitmap
 		var height = this.matrix.length;
 		var width = this.matrix[0].length;
@@ -121,7 +130,7 @@ export class NameWidget {
 					j,
 					i,
 					offsetX,
-					75,
+					this.offsetY,
 					mouseXY[0],
 					mouseXY[1],
 					frameData.frame,
