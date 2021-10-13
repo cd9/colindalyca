@@ -7,7 +7,6 @@ import { TimelineWidget } from "./timeline-widget.js";
 import { COLOR_THEME } from "./color-theme.js";
 import { RainWidget } from "./rain-widget.js";
 import { TerminalWidget } from "./terminal-widget.js";
-import { LetterSpillWidget } from "./letter-spill-widget.js";
 
 /*
 Sets up a canvas in the DOM.
@@ -149,9 +148,6 @@ export class CanvasManager {
 
 		// Timeline Widget
 		this.canvasElements.push(new TimelineWidget(this.canvas));
-
-		// Timeline Widget
-		this.canvasElements.push(new LetterSpillWidget(this.canvas));
 
 		// Source Code Link
 		this.canvasElements.push(
