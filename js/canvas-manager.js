@@ -7,6 +7,7 @@ import { TimelineWidget } from "./timeline-widget.js";
 import { COLOR_THEME } from "./color-theme.js";
 import { RainWidget } from "./rain-widget.js";
 import { TerminalWidget } from "./terminal-widget.js";
+import { LetterSpillWidget } from "./letter-spill-widget.js";
 
 /*
 Sets up a canvas in the DOM.
@@ -31,7 +32,7 @@ export class CanvasManager {
 			pageY: 700,
 		});
 
-		// If mobile device, track scrolling
+		// If mobile device, track scrolling and accept mouse touches
 		if (
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator.userAgent
@@ -46,6 +47,7 @@ export class CanvasManager {
 					});
 				}.bind(this)
 			);
+			window.ontouchstart = this.saveMouseCoordinates.bind(this);
 		}
 	}
 
@@ -86,7 +88,12 @@ export class CanvasManager {
 
 	// Track mouse
 	saveMouseCoordinates(e) {
-		this.mouseXY = [e.pageX, e.pageY];
+		if (e.pageX) {
+			this.mouseXY = [e.pageX, e.pageY];
+		} else if (e.touches) {
+			var touch = e.touches[0];
+			this.mouseXY = [touch.pageX, touch.pageY];
+		}
 	}
 
 	initialize() {
@@ -148,6 +155,9 @@ export class CanvasManager {
 
 		// Timeline Widget
 		this.canvasElements.push(new TimelineWidget(this.canvas));
+
+		// Letter Spill Widget
+		this.canvasElements.push(new LetterSpillWidget(this.canvas));
 
 		// Source Code Link
 		this.canvasElements.push(

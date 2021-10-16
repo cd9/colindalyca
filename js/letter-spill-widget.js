@@ -15,23 +15,23 @@ export class LetterSpillWidget {
 		this.anchorX = canvas.width / 2;
 		this.anchorY = 3200;
 		this.textOffsetX = -400;
-		this.textOffsetY = 300;
+		this.textOffsetY = 200;
 		this.mouseXY = [0, 0];
 
 		this.blurbs = [
 			[
 				"Game Dev",
 				[
-					"Programming has the potential to be pretty dry, so game dev as a hobby helps",
-					"add a bit of color to balance that out.",
+					"Programming has the potential to be pretty dry, so game dev as a hobby",
+					"helps add a bit of color to balance that out.",
 					"",
-					"I find that it's a pretty satisfying blend of engineering and arts, and I ",
-					"also personally find it liberating to be able to express an idea in the",
-					"form of something that will be interactive, immersive, and entertaining",
-					"for others.",
+					"I find that it's a pretty satisfying blend of engineering and arts,",
+					"and I also personally find it liberating to be able to express an idea",
+					"in the form of something that will be interactive, immersive, and ",
+					"(hopefully) entertaining for others.",
 					"",
-					"Over the years, I've published a few games to the Play Store. I've taken",
-					"most of them down since, but I'm constantly working on new projects.",
+					"Over the years, I've published a few games to the Play Store. I've ",
+					"taken most of them down since, but I'm usually working on something.",
 				],
 			],
 			[
@@ -41,34 +41,46 @@ export class LetterSpillWidget {
 					"",
 					"Why?",
 					"",
-					"Well for starters, I happen to be more familiar with 2D graphics and game",
-					"development than I am with any modern web development framework.",
-					"",
-					"I also just think it's cool. This website can't be trivially scraped,",
-					"and I can implement cool animations and VFX much more easily.",
+					"Well for starters, I happen to be more familiar with 2D graphics and",
+					"game development than I am with any modern web development framework.",
 					"",
 					"It's also pretty unique!",
+					"",
+					"This website can't be trivially scraped,",
+					"and I can implement novel animations and VFX easily.",
+					"",
+					"Take this effect for example!",
+					"",
+					"Mostly though, I just think it's cool.",
 				],
 			],
 			[
 				"Music",
 				[
 					"I try to listen to a lot of music.",
-					"Here's a really short list of some bands I'm into:",
 					"",
-					"Post Rock: Godspeed You! Black Emperor, Explosions in the Sky",
+					"Here's a short list of some bands I'm into:",
 					"",
-					"Post Punk: Parquet Courts, IDLES, Iceage",
+					"Post Rock:   Godspeed You! Black Emperor, Explosions in the Sky",
+					"             Fishmans, Mouse on the Keys",
 					"",
-					"Indie Rock: The National, The Strokes, Pavement, The Unicorns",
+					"Post Punk:   Parquet Courts, IDLES, Iceage",
 					"",
-					"Indie Folk: The Microphones, Big Thief, Bon Iver, Neutral Milk Hotel",
+					"Indie Rock:  The National, The Strokes, Pavement, The Unicorns",
+					"             Arcade Fire, Modest Mouse, Car Seat Headrest",
 					"",
-					"Art Pop: Angel Olsen, Weyes Blood, Animal Collective",
+					"Indie Folk:  The Microphones / Mount Eerie / any Phil Elverum project",
+					"             Neutral Milk Hotel / any Jeff Mangum project",
+					"             Big Thief, Bon Iver",
 					"",
-					"Hip Hop: Deltron 3030, Danny Brown, Cordae (+ the usual suspects)",
+					"Art Pop:     Angel Olsen, Weyes Blood, Animal Collective",
 					"",
-					"Electronic: The Avalanches, Gorillaz, Daft Punk, Portishead",
+					"Hip Hop:     Injury Reserve, Deltron 3030, Danny Brown, Cordae, Kendrick",
+					"             A Tribe Called Quest, Kanye, Milo, Tyler, Frank Ocean",
+					"",
+					"Electronic:  The Avalanches, Gorillaz, Daft Punk, Portishead",
+					"",
+					"I recommend any and all of the above artists.",
 				],
 			],
 		];
@@ -81,13 +93,16 @@ export class LetterSpillWidget {
 		this.containerWidth = 100;
 		this.containerHeight = 100;
 		this.containerLineWidth = 6;
-		this.blurbLineHeight = 25;
+		this.blurbLineHeight = 30;
 		this.blurbTitleSize = 20;
 		this.blurbLetterSize = 20;
 		this.lerpValue = 0.1;
 
 		// State
 		this.currentPositions = [];
+		this.targetPositions = [];
+		this.currentIndexToAnimate = [];
+		this.lettersPerFrame = 2;
 		this.selectedBlurbIndex = -1;
 		this.overlappedBlurbIndex = -1;
 		this.spillFrame = 0;
@@ -120,6 +135,7 @@ export class LetterSpillWidget {
 
 		// Initialize letter positions
 		if (this.currentPositions === null) {
+			this.currentIndexToAnimate = 0;
 			var letterPositions = [];
 			// For each line
 			for (var j = 0; j < blurb[1].length; j++) {
@@ -146,54 +162,70 @@ export class LetterSpillWidget {
 				}
 			}
 			this.currentPositions = letterPositions;
-		}
 
-		// Get width of a single character
-		var singleWidth = new TextField(
-			this.canvas,
-			"a",
-			0,
-			0,
-			this.blurbLetterSize,
-			COLOR_THEME.white
-		).getWidth();
-
-		// For each line
-		var letterIndex = 0;
-		for (var j = 0; j < blurb[1].length; j++) {
-			var line = blurb[1][j];
-
-			// For each character in each line
-			for (var k = 0; k < line.length; k++) {
-				var letterPosition = this.currentPositions[letterIndex];
-				var targetX = (k + 0.5) * singleWidth + this.anchorX + this.textOffsetX;
-				var targetY =
-					j * this.blurbLineHeight + this.anchorY + this.textOffsetY;
-				this.currentPositions[letterIndex] = {
-					letter: line[k],
-					x: letterPosition.x + (targetX - letterPosition.x) * this.lerpValue,
-					y: letterPosition.y + (targetY - letterPosition.y) * this.lerpValue,
-					rotation: letterPosition.rotation * (1 - this.lerpValue),
-				};
-				letterIndex++;
+			// Set target positions
+			// Get width of a single character
+			var singleWidth = new TextField(
+				this.canvas,
+				"a",
+				0,
+				0,
+				this.blurbLetterSize,
+				COLOR_THEME.white
+			).getWidth();
+			// For each line
+			var letterIndex = 0;
+			for (var j = 0; j < blurb[1].length; j++) {
+				var line = blurb[1][j];
+				// For each character in each line
+				for (var k = 0; k < line.length; k++) {
+					this.targetPositions[letterIndex] = {
+						x: (k + 0.5) * singleWidth + this.anchorX + this.textOffsetX,
+						y: j * this.blurbLineHeight + this.anchorY + this.textOffsetY,
+						rotation: 0,
+					};
+					letterIndex++;
+				}
 			}
 		}
 
+		// If we're already done animating a line, we can just render the whole line
+		if (this.currentIndexToAnimate < this.currentPositions.length) {
+			this.currentIndexToAnimate += this.lettersPerFrame;
+		}
+
 		// Render letters
-		var letterPositions = this.currentPositions;
-		for (var j = 0; j < letterPositions.length; j++) {
-			var letterPosition = letterPositions[j];
+		for (var j = this.currentPositions.length - 1; j >= 0; j--) {
+			var position = this.currentPositions[j];
+			var target = this.targetPositions[j];
+			var color = COLOR_THEME.white;
+			if (
+				!this.doPositionsMatch(position, target) &&
+				this.currentIndexToAnimate >= j
+			) {
+				position.x = position.x + (target.x - position.x) * this.lerpValue;
+				position.y = position.y + (target.y - position.y) * this.lerpValue;
+				position.rotation =
+					position.rotation +
+					(target.rotation - position.rotation) * this.lerpValue;
+				color = COLOR_THEME.grey;
+			}
+
 			new TextField(
 				this.canvas,
-				letterPosition.letter,
-				letterPosition.x,
-				letterPosition.y,
+				position.letter,
+				position.x,
+				position.y,
 				this.blurbLetterSize,
-				COLOR_THEME.white,
+				color,
 				"center",
-				letterPosition.rotation
+				position.rotation
 			).tick(frameData);
 		}
+	}
+
+	doPositionsMatch(p1, p2) {
+		return Math.abs(p1.x - p2.x) < 1 && Math.abs(p1.y - p2.y) < 1;
 	}
 
 	renderTitle(frameData) {
@@ -233,7 +265,7 @@ export class LetterSpillWidget {
 				this.canvas,
 				blurb[0],
 				blurbPoints.x1 + (blurbPoints.x2 - blurbPoints.x1) / 2,
-				blurbPoints.y1 + this.containerHeight/2,
+				blurbPoints.y1 + this.containerHeight / 2,
 				this.blurbTitleSize,
 				COLOR_THEME.purple,
 				"center"
@@ -261,7 +293,6 @@ export class LetterSpillWidget {
 	tick(frameData) {
 		// Update mouse
 		if (frameData.scrollTop + window.innerHeight <= this.anchorY - 100) {
-			console.log("Skip render");
 			return;
 		}
 		this.mouseXY = frameData.mouseXY;
