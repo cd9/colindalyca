@@ -96,16 +96,18 @@ export class LetterSpillWidget {
 		this.blurbLineHeight = 30;
 		this.blurbTitleSize = 20;
 		this.blurbLetterSize = 20;
-		this.lerpValue = 0.1;
+		this.lerpValue = 0.15;
 
 		// State
-		this.currentPositions = [];
+		this.currentPositions = null;
 		this.targetPositions = [];
 		this.currentIndexToAnimate = [];
-		this.lettersPerFrame = 2;
-		this.selectedBlurbIndex = -1;
+		this.lettersPerFrame = 1.5;
+		this.selectedBlurbIndex = 2;
 		this.overlappedBlurbIndex = -1;
 		this.spillFrame = 0;
+		this.mouseThreshold = 3000;
+		this.yDelta = 15;
 
 		//Track mouse
 		window.addEventListener("click", this.onClick.bind(this));
@@ -146,12 +148,12 @@ export class LetterSpillWidget {
 						blurbPoints.x1 +
 						this.containerLineWidth +
 						Math.random() *
-							(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
+						(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
 					var randY =
 						blurbPoints.y1 +
 						this.containerLineWidth +
 						(0.25 + Math.random() * 0.75) *
-							(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
+						(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
 					var randRotation = Math.random() * 360;
 					letterPositions.push({
 						letter: line[k],
@@ -189,16 +191,17 @@ export class LetterSpillWidget {
 			}
 		}
 
-		// If we're already done animating a line, we can just render the whole line
-		if (this.currentIndexToAnimate < this.currentPositions.length) {
-			this.currentIndexToAnimate += this.lettersPerFrame;
-		}
+		// Gradually animate all letters
+		this.currentIndexToAnimate += this.lettersPerFrame;
 
 		// Render letters
 		for (var j = this.currentPositions.length - 1; j >= 0; j--) {
 			var position = this.currentPositions[j];
 			var target = this.targetPositions[j];
 			var color = COLOR_THEME.white;
+			if (!this.doPositionsMatch(position, target, 5)) {
+				color = COLOR_THEME.grey;
+			}
 			if (
 				!this.doPositionsMatch(position, target) &&
 				this.currentIndexToAnimate >= j
@@ -208,14 +211,20 @@ export class LetterSpillWidget {
 				position.rotation =
 					position.rotation +
 					(target.rotation - position.rotation) * this.lerpValue;
-				color = COLOR_THEME.grey;
+			}
+
+			var distanceSquaredFromMouse =
+				Math.pow(this.mouseXY[0] - position.x, 2) + Math.pow(this.mouseXY[1] - position.y, 2);
+			var yPos = position.y;
+			if (distanceSquaredFromMouse < this.mouseThreshold) {
+				yPos -= (1 - (distanceSquaredFromMouse / this.mouseThreshold)) * this.yDelta;
 			}
 
 			new TextField(
 				this.canvas,
 				position.letter,
 				position.x,
-				position.y,
+				yPos,
 				this.blurbLetterSize,
 				color,
 				"center",
@@ -224,14 +233,18 @@ export class LetterSpillWidget {
 		}
 	}
 
-	doPositionsMatch(p1, p2) {
-		return Math.abs(p1.x - p2.x) < 1 && Math.abs(p1.y - p2.y) < 1;
+	doPositionsMatch(p1, p2, threshold) {
+		var t = 0.5;
+		if (threshold) {
+			t = threshold;
+		}
+		return Math.abs(p1.x - p2.x) < t && Math.abs(p1.y - p2.y) < t;
 	}
 
 	renderTitle(frameData) {
 		new TextField(
 			this.canvas,
-			"Tap a box!",
+			"Blurbs",
 			this.anchorX,
 			this.anchorY - 50,
 			40,
@@ -245,7 +258,11 @@ export class LetterSpillWidget {
 			var blurb = this.blurbs[i];
 			// Top of container
 			this.ctx.strokeStyle = COLOR_THEME.lines;
-			this.ctx.lineWidth = this.containerLineWidth;
+			var lineWidth = this.containerLineWidth;
+			if (i === this.overlappedBlurbIndex) {
+				lineWidth *= 1.5;
+			}
+			this.ctx.lineWidth = lineWidth;
 			var blurbPoints = this.getBlurbPoints(i);
 			this.ctx.beginPath();
 			this.ctx.moveTo(blurbPoints.x1, blurbPoints.y2);
@@ -254,7 +271,7 @@ export class LetterSpillWidget {
 			this.ctx.lineTo(blurbPoints.x2, blurbPoints.y2);
 			if (this.selectedBlurbIndex !== i) {
 				this.ctx.lineTo(
-					blurbPoints.x1 - this.containerLineWidth / 2,
+					blurbPoints.x1 - lineWidth / 2,
 					blurbPoints.y2
 				);
 			} else {
