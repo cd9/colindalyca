@@ -38,6 +38,7 @@ export class CanvasManager {
 				navigator.userAgent
 			)
 		) {
+			/*
 			window.addEventListener(
 				"scroll",
 				function () {
@@ -47,6 +48,7 @@ export class CanvasManager {
 					});
 				}.bind(this)
 			);
+			*/
 			window.ontouchstart = this.saveMouseCoordinates.bind(this);
 		}
 	}
