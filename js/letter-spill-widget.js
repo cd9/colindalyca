@@ -231,11 +231,11 @@ export class LetterSpillWidget {
 	renderTitle(frameData) {
 		new TextField(
 			this.canvas,
-			"Blurbs",
+			"Tap a box!",
 			this.anchorX,
-			this.anchorY - 75,
-			30,
-			COLOR_THEME.blue,
+			this.anchorY - 50,
+			40,
+			COLOR_THEME.green,
 			"center"
 		).tick(frameData);
 	}
