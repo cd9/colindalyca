@@ -32,23 +32,12 @@ export class CanvasManager {
 			pageY: 700,
 		});
 
-		// If mobile device, track scrolling and accept mouse touches
+		// If mobile device, track scrolling and accept touches
 		if (
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator.userAgent
 			)
 		) {
-			/*
-			window.addEventListener(
-				"scroll",
-				function () {
-					this.saveMouseCoordinates({
-						pageX: document.body.clientWidth / 2,
-						pageY: this.getScrollTop() + window.innerHeight / 3,
-					});
-				}.bind(this)
-			);
-			*/
 			window.ontouchstart = this.saveMouseCoordinates.bind(this);
 		}
 	}

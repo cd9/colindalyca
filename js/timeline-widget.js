@@ -12,7 +12,6 @@ export class TimelineWidget {
 		this.ctx = canvas.getContext("2d");
 		this.yStart = 850;
 		this.xStart = canvas.width / 2 - 200;
-
 		this.titleTextField = new TextField(
 			canvas,
 			"Timeline",
@@ -31,6 +30,14 @@ export class TimelineWidget {
 			this.canvas,
 			20,
 			COLOR_THEME.orange
+		);
+		this.scrollY = 0;
+		window.addEventListener(
+			"scroll",
+			function () {
+				var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+				this.scrollY = scrollTop + window.innerHeight / 3,
+			}.bind(this)
 		);
 		this.events = [
 			[
@@ -199,7 +206,7 @@ export class TimelineWidget {
 	}
 
 	tick(frameData) {
-		this.renderEvents(frameData.mouseXY[1]);
+		this.renderEvents(this.scrollY);
 		this.titleTextField.tick(frameData);
 		this.locationTextTyper.tick(frameData);
 		this.descriptionTextTyper.tick(frameData);
