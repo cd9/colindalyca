@@ -63,6 +63,7 @@ export class LetterSpillWidget {
 					"",
 					"Post Rock:   Godspeed You! Black Emperor, Explosions in the Sky",
 					"             Fishmans, Mouse on the Keys",
+					"             Black Country, New Road",
 					"",
 					"Post Punk:   Parquet Courts, IDLES, Iceage",
 					"",
