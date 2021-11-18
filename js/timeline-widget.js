@@ -36,7 +36,7 @@ export class TimelineWidget {
 			"scroll",
 			function () {
 				var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-				this.scrollY = scrollTop + window.innerHeight / 3,
+				this.scrollY = scrollTop + window.innerHeight / 3;
 			}.bind(this)
 		);
 		this.events = [
