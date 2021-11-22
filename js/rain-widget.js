@@ -12,7 +12,7 @@ export class RainWidget {
 		this.dropSpeed = 4;
 		this.dropSizePeak = 8;
 		this.xBlockStart = 100;
-		this.xBlockEnd = canvas.width - 100;
+		this.xBlockEnd = canvas.getWidth() - 100;
 		this.dropLocations = [];
 		var self = this;
 		for (var i = 0; i < this.numDrops; i++) {
@@ -23,7 +23,7 @@ export class RainWidget {
 	spawnDrop(dropIndex) {
 		var spawnLeft = dropIndex < this.numDrops / 2;
 		var xMin = spawnLeft ? 0 : this.xBlockEnd;
-		var xMax = spawnLeft ? this.xBlockStart : this.canvas.width;
+		var xMax = spawnLeft ? this.xBlockStart : this.canvas.getWidth();
 		var randX = xMin + Math.random() * (xMax - xMin);
 		while (dropIndex > this.dropLocations.length - 1) {
 			this.dropLocations.push([-100, -100]);

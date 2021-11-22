@@ -92,13 +92,26 @@ export class CanvasManager {
 		if (this.canvas) {
 			this.canvas.remove();
 		}
+
+		// Create an HD canvas
+		let ratio = 2;
+		let width = document.body.clientWidth;
+		let height = Math.max(document.body.clientHeight, 7500);
 		this.canvas = document.createElement("canvas");
-		this.canvas.height = Math.max(document.body.clientHeight, 4500);
-		this.canvas.width = document.body.clientWidth;
 		document.body.appendChild(this.canvas);
+		this.canvas.width = width * ratio;
+		this.canvas.height = height * ratio;
+		this.canvas.style.width = width + "px";
+		this.canvas.style.height = height + "px";
+
+		// Add normalized canvas width/height getters
+		this.canvas.getWidth = function () {
+			return this.canvas.width / ratio;
+		}.bind(this);
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
+		this.ctx.scale(ratio, ratio);
 
 		// Reset canvas elements
 		this.canvasElements = [];
@@ -113,15 +126,15 @@ export class CanvasManager {
 		this.canvasElements.push(new NameWidget(this.canvas));
 
 		// Link Bar
-		var linkY = 295;
-		var linkX = this.canvas.width / 2;
-		var linkSize = 25;
+		var linkY = 280;
+		var linkX = this.canvas.getWidth() / 2;
+		var linkSize = 40;
 
 		// Github Link
 		this.canvasElements.push(
 			new LinkWidget(
 				this.canvas,
-				linkX - 75,
+				linkX - 150,
 				linkY,
 				">Github",
 				"https://github.com/cd9",
@@ -133,7 +146,7 @@ export class CanvasManager {
 		this.canvasElements.push(
 			new LinkWidget(
 				this.canvas,
-				linkX + 75,
+				linkX + 150,
 				linkY,
 				">LinkedIn",
 				"https://www.linkedin.com/in/cjdaly/",
@@ -167,7 +180,7 @@ export class CanvasManager {
 			new TextField(
 				this.canvas,
 				"This website was build entirely with HTML Canvas",
-				this.canvas.width / 2,
+				this.canvas.getWidth() / 2,
 				this.canvas.height - 30,
 				16,
 				COLOR_THEME.purple

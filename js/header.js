@@ -7,12 +7,11 @@ export class Header {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.lineY = 30;
-		this.lineWidth = 3;
+		this.lineY = 40;
+		this.lineWidth = 4;
 		this.messages = [
 			"welcome to my website!",
 			"good luck scraping it!",
-			"I apologize to mobile users",
 			"try dragging around the terminal!",
 		];
 		this.grabGeo();
@@ -43,7 +42,7 @@ export class Header {
 	configureText() {
 		this.ctx.fillStyle = COLOR_THEME.white;
 		this.ctx.textAlign = "left";
-		this.ctx.font = `20px monospace`;
+		this.ctx.font = `25px monospace`;
 	}
 
 	getFullString() {
@@ -60,17 +59,17 @@ export class Header {
 		this.ctx.beginPath();
 		this.ctx.moveTo(0, this.lineY);
 		this.ctx.lineWidth = this.lineWidth;
-		this.ctx.lineTo(this.canvas.width, this.lineY);
+		this.ctx.lineTo(this.canvas.getWidth(), this.lineY);
 		this.ctx.stroke();
 
 		this.configureText();
 		//Display messages
 		this.ctx.fillText(
 			this.getFullString(),
-			this.totalWidth -
+			this.totalWidth * 1.5 -
 				((frameData.frame * this.speed) %
-					(this.totalWidth * 2 + this.canvas.width)),
-			this.lineY - 10
+					(this.totalWidth * 3 + this.canvas.getWidth())),
+			this.lineY - 12
 		);
 	}
 }

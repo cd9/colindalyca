@@ -10,32 +10,34 @@ export class TimelineWidget {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.yStart = 850;
-		this.xStart = canvas.width / 2 - 200;
+		this.yStart = 1000;
+		this.xStart = canvas.getWidth() / 2 - 275;
 		this.titleTextField = new TextField(
 			canvas,
 			"Timeline",
-			canvas.width / 2,
-			this.yStart - 10,
-			35,
+			canvas.getWidth() / 2,
+			this.yStart - 40,
+			40,
 			COLOR_THEME.green
 		);
-		this.blocksPerEvent = 9;
+		this.blocksPerEvent = 15;
 		this.blockHeight = 20;
 		this.circleRadius = 8;
 		this.blockWidth = 4;
 		this.blockSpacing = 12;
-		this.locationTextTyper = new TextTyper(this.canvas, 20, COLOR_THEME.blue);
+		this.selectedThreshold = 100;
+		this.locationTextTyper = new TextTyper(this.canvas, 24, COLOR_THEME.blue);
 		this.descriptionTextTyper = new TextTyper(
 			this.canvas,
-			20,
+			24,
 			COLOR_THEME.orange
 		);
 		this.scrollY = 0;
 		window.addEventListener(
 			"scroll",
 			function () {
-				var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+				var scrollTop =
+					window.pageYOffset || document.documentElement.scrollTop;
 				this.scrollY = scrollTop + window.innerHeight / 3;
 			}.bind(this)
 		);
@@ -119,7 +121,7 @@ export class TimelineWidget {
 				if (j - 1 === this.blocksPerEvent - j) {
 					var circleRadius = this.circleRadius;
 					var selected = false;
-					if (Math.abs(mouseY - yOffset) < 50) {
+					if (Math.abs(mouseY - yOffset) < this.selectedThreshold) {
 						circleRadius *= 1.2;
 						selected = true;
 					}
@@ -136,9 +138,9 @@ export class TimelineWidget {
 					// Render date
 					this.renderText(
 						xOffset + this.blockWidth - 20,
-						yOffset + 12,
+						yOffset + 14,
 						event[0],
-						28,
+						30,
 						COLOR_THEME.green,
 						"right",
 						selected
@@ -147,9 +149,9 @@ export class TimelineWidget {
 					// Render Title
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 12,
+						yOffset + 14,
 						event[1],
-						28,
+						30,
 						COLOR_THEME.white,
 						"left",
 						selected
@@ -158,9 +160,9 @@ export class TimelineWidget {
 					// Render Company
 					this.renderText(
 						xOffset + this.blockWidth + 20,
-						yOffset + 40,
+						yOffset + 45,
 						event[2],
-						22,
+						25,
 						COLOR_THEME.purple,
 						"left",
 						false
@@ -174,12 +176,12 @@ export class TimelineWidget {
 						this.locationTextTyper.tryStart(event[3], locationId);
 						this.locationTextTyper.position(
 							xOffset + this.blockWidth + 20,
-							yOffset + 70
+							yOffset + 75
 						);
 						this.descriptionTextTyper.tryStart(event[4], descriptionId);
 						this.descriptionTextTyper.position(
 							xOffset + this.blockWidth + 20,
-							yOffset + 100
+							yOffset + 105
 						);
 					} else {
 						this.locationTextTyper.tryStop(locationId);
@@ -190,7 +192,7 @@ export class TimelineWidget {
 				} else {
 					// Otherwise, render a normal tick
 					var blockHeight = Math.max(
-						10,
+						5,
 						Math.min(
 							this.blockHeight,
 							(Math.abs(yOffset - mouseY) / 200) * this.blockHeight

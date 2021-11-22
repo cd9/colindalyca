@@ -27,14 +27,14 @@ export class NameWidget {
 			],
 		];
 
-		var margin = 2;
+		var margin = 1;
 		var scaleFactor = 2;
 		var height = (letters.length + 2 * margin) * scaleFactor;
 		var width = (letters[0].length + 2 * margin) * scaleFactor;
 
-		this.offsetY = 75;
+		this.offsetY = 80;
 
-		this.blockWidth = 10;
+		this.blockWidth = 11;
 		this.blockSpacing = 1;
 		this.mouseDistance = 300;
 		this.mouseDistanceSquared = Math.pow(this.mouseDistance, 2);
@@ -110,11 +110,11 @@ export class NameWidget {
 	}
 
 	tick(frameData) {
-		// If off screen, stop rendering
 		if (
 			frameData.scrollTop >=
 			this.offsetY + (this.blockWidth + this.blockSpacing) * this.matrix.length
 		) {
+			// If off screen, stop rendering
 			return;
 		}
 		// Draw bitmap
@@ -122,7 +122,7 @@ export class NameWidget {
 		var width = this.matrix[0].length;
 		var offsetX =
 			(this.blockWidth * width + this.blockSpacing * (width - 1)) / -2 +
-			this.canvas.width / 2;
+			this.canvas.getWidth() / 2;
 		var mouseXY = frameData.mouseXY;
 		for (var i = 0; i < height; i++) {
 			for (var j = 0; j < width; j++) {

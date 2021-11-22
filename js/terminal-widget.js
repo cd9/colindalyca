@@ -11,18 +11,18 @@ export class TerminalWidget {
 		this.ctx = canvas.getContext("2d");
 
 		// Window
-		this.windowWidth = 800;
-		this.windowHeight = 450;
+		this.windowWidth = 880;
+		this.windowHeight = 522;
 		this.outlineWidth = 3;
-		this.windowBarWidth = 20;
-		this.windowBarFontSize = 16;
+		this.windowBarWidth = 25;
+		this.windowBarFontSize = 20;
 		this.windowBarString = "cdaly@cdalyca: ~";
 		this.windowMargin = 5;
 
 		// State for moving window
 		this.overlappingWindow = false;
 		this.draggingWindow = false;
-		this.targetWindowX = this.canvas.width / 2 - this.windowWidth / 2;
+		this.targetWindowX = this.canvas.getWidth() / 2 - this.windowWidth / 2;
 		this.targetWindowY = 325;
 		this.windowX = this.targetWindowX;
 		this.windowY = this.targetWindowY;
@@ -34,7 +34,7 @@ export class TerminalWidget {
 		window.addEventListener("mouseup", this.onMouseUp.bind(this));
 
 		// Terminal
-		this.fontSize = 17;
+		this.fontSize = 20;
 		this.lineGap = 1;
 		this.totalLines = 23;
 		this.welcomeMessage = [
@@ -127,7 +127,7 @@ export class TerminalWidget {
 			this.canvas,
 			this.windowBarString,
 			this.windowX + this.outlineWidth,
-			this.windowY + 14,
+			this.windowY + 18,
 			this.windowBarFontSize,
 			COLOR_THEME.dark,
 			"left"
@@ -161,8 +161,8 @@ export class TerminalWidget {
 		// Last line
 		var lastIndex = this.vimTextFields.length - 1;
 		var footer = insert
-			? `-- INSERT --                                                 ${cursorY},${cursorX}     All`
-			: `"welcome-message.txt" [New File]                             0,0-1     All`;
+			? `-- INSERT --                                                    ${cursorY},${cursorX}     All`
+			: `"welcome-message.txt" [New File]                                0,0-1     All`;
 		this.vimTextFields[lastIndex] = buildTextField(
 			footer,
 			lastIndex,
