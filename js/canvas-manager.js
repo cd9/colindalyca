@@ -95,7 +95,8 @@ export class CanvasManager {
 
 		// Scale UI based on screen width
 		let width = document.body.clientWidth;
-		let ratio = Math.max(width / 2000, 0.95) * 2;
+		let resolutionScale = 1.5;
+		let ratio = Math.max(width / 2000, 0.95) * resolutionScale;
 		let height = Math.max(document.body.clientHeight, 3000);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
@@ -105,12 +106,12 @@ export class CanvasManager {
 		this.canvas.style.height = height + "px";
 
 		this.canvas.getScaledWidth = (() => {
-			return this.canvas.width / 2;
+			return this.canvas.width / resolutionScale;
 		}).bind(this);
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
-		this.ctx.scale(2, 2);
+		this.ctx.scale(resolutionScale, resolutionScale);
 
 		// Reset canvas elements
 		this.canvasElements = [];
