@@ -100,8 +100,8 @@ export class CanvasManager {
 		try {
 			this.canvas = document.createElement("canvas");
 			document.body.appendChild(this.canvas);
-			this.canvas.width = width * ratio;
-			this.canvas.height = height * ratio;
+			this.canvas.width = width * 1.01;
+			this.canvas.height = heigh * 1.01;
 			/*
 			this.canvas.style.width = width + "px";
 			this.canvas.style.height = height + "px";
