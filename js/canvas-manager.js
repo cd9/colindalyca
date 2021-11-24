@@ -63,8 +63,8 @@ export class CanvasManager {
 	// Runs every frame
 	runClock() {
 		// Clear visible canvas every frame
-		let scrollTop = this.getScrollTop();
-		let windowHeight = window.innerHeight + 100;
+		let scrollTop = this.getScrollTop() - 500;
+		let windowHeight = window.innerHeight + 500;
 		this.ctx.clearRect(
 			0,
 			scrollTop,

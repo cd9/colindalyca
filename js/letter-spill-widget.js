@@ -13,7 +13,7 @@ export class LetterSpillWidget {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.anchorX = canvas.getScaledWidth() / 2;
-		this.anchorY = 3200;
+		this.anchorY = 3100;
 		this.maxLineLength = 50;
 		this.textOffsetX = -405;
 		this.textOffsetY = 200;
@@ -143,8 +143,9 @@ export class LetterSpillWidget {
 		this.lerpValue = 0.15;
 
 		// State
-		this.currentPositions = null;
-		this.targetPositions = [];
+		this.letterPositions = null;
+		this.lines = [];
+		this.letterTargets = [];
 		this.currentIndexToAnimate = [];
 		this.lettersPerFrame = 1.5;
 		this.selectedBlurbIndex = 2;
@@ -160,7 +161,7 @@ export class LetterSpillWidget {
 	onClick() {
 		this.selectedBlurbIndex = this.overlappedBlurbIndex;
 		if (this.selectedBlurbIndex != -1) {
-			this.currentPositions = null;
+			this.letterPositions = null;
 		}
 	}
 
@@ -180,7 +181,7 @@ export class LetterSpillWidget {
 		var blurbPoints = this.getBlurbPoints(this.selectedBlurbIndex);
 
 		// Initialize letter positions
-		if (this.currentPositions === null) {
+		if (this.letterPositions === null) {
 			this.currentIndexToAnimate = 0;
 			var letterPositions = [];
 			// For each line
@@ -200,14 +201,14 @@ export class LetterSpillWidget {
 							(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
 					var randRotation = Math.random() * 360;
 					letterPositions.push({
-						letter: line[k],
+						content: line[k],
 						x: randX,
 						y: randY,
 						rotation: randRotation,
 					});
 				}
 			}
-			this.currentPositions = letterPositions;
+			this.letterPositions = letterPositions;
 
 			// Set target positions
 			// Get width of a single character
@@ -224,28 +225,64 @@ export class LetterSpillWidget {
 			for (var j = 0; j < blurb[1].length; j++) {
 				var line = blurb[1][j];
 				// For each character in each line
+				var startIndex = letterIndex;
 				for (var k = 0; k < line.length; k++) {
-					this.targetPositions[letterIndex] = {
+					this.letterTargets[letterIndex] = {
 						x: (k + 0.5) * singleWidth + this.anchorX + this.textOffsetX,
 						y: j * this.blurbLineHeight + this.anchorY + this.textOffsetY,
 						rotation: 0,
 					};
 					letterIndex++;
 				}
+				this.lines.push({
+					content: line,
+					x: 0.5 * singleWidth + this.anchorX + this.textOffsetX,
+					y: j * this.blurbLineHeight + this.anchorY + this.textOffsetY,
+					rotation: 0,
+					startIndex: startIndex,
+					endIndex: letterIndex,
+				});
 			}
 		}
 
 		// Gradually animate all letters
 		this.currentIndexToAnimate += this.lettersPerFrame;
 
-		// Render letters
-		for (var j = this.currentPositions.length - 1; j >= 0; j--) {
-			var position = this.currentPositions[j];
-			var target = this.targetPositions[j];
-			var color = COLOR_THEME.white;
-			if (!this.doPositionsMatch(position, target, 5)) {
-				color = COLOR_THEME.grey;
+		// First, render lines that have already been typed out
+		var firstLetterIndex = 0;
+		for (var k = 0; k < this.lines.length; k++) {
+			var line = this.lines[k];
+			if (line.content === "") {
+				continue;
 			}
+			var allLettersTyped = true;
+			for (var j = line.startIndex; j < line.endIndex; j++) {
+				var position = this.letterPositions[j];
+				var target = this.letterTargets[j];
+				if (!this.doPositionsMatch(position, target, 1)) {
+					allLettersTyped = false;
+					break;
+				}
+			}
+			if (allLettersTyped) {
+				new TextField(
+					this.canvas,
+					line.content,
+					line.x,
+					line.y,
+					this.blurbLetterSize,
+					COLOR_THEME.white,
+					"left",
+					line.rotation
+				).tick(frameData);
+				firstLetterIndex = line.endIndex;
+			}
+		}
+
+		// Render letters
+		for (var j = this.letterPositions.length - 1; j >= firstLetterIndex; j--) {
+			var position = this.letterPositions[j];
+			var target = this.letterTargets[j];
 			if (
 				!this.doPositionsMatch(position, target) &&
 				this.currentIndexToAnimate >= j
@@ -268,11 +305,11 @@ export class LetterSpillWidget {
 
 			new TextField(
 				this.canvas,
-				position.letter,
+				position.content,
 				position.x,
 				yPos,
 				this.blurbLetterSize,
-				color,
+				COLOR_THEME.grey,
 				"center",
 				position.rotation
 			).tick(frameData);
