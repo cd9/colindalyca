@@ -109,6 +109,9 @@ export class CanvasManager {
 			console.log(e);
 		}
 		console.log("made canvas");
+		console.log(`ratio of ${ratio}`);
+		console.log(`height of ${this.canvas.height}`);
+		console.log(`width of ${this.canvas.width}`);
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
