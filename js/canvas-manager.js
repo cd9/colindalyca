@@ -62,23 +62,23 @@ export class CanvasManager {
 
 	// Runs every frame
 	runClock() {
-		// Clear visible canvas every frame
-		let scrollTop = this.getScrollTop() - 1000;
-		let windowHeight = window.innerHeight + 1000;
-		this.ctx.clearRect(
-			0,
-			scrollTop,
-			this.canvas.getScaledWidth(),
-			windowHeight
-		);
+		// Clear canvas every frame
+		this.ctx.clearRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
 		this.ctx.beginPath();
 
 		// Fill background
 		this.ctx.fillStyle = COLOR_THEME.background;
-		this.ctx.fillRect(0, scrollTop, this.canvas.getScaledWidth(), windowHeight);
+		this.ctx.fillRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
 
+		let scrollTop = this.getScrollTop();
+		let windowHeight = window.innerHeight * this.scaleFactor;
 		// Call tick event on every canvas element
-		var frameData = new FrameData(this.frame, this.mouseXY, scrollTop);
+		var frameData = new FrameData(
+			this.frame,
+			this.mouseXY,
+			scrollTop,
+			scrollTop + windowHeight
+		);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
 	}

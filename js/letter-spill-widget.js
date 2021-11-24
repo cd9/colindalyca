@@ -390,7 +390,7 @@ export class LetterSpillWidget {
 
 	tick(frameData) {
 		// Update mouse
-		if (frameData.scrollTop + window.innerHeight <= this.anchorY - 100) {
+		if (frameData.scrollBottom <= this.anchorY - 100) {
 			return;
 		}
 		this.mouseXY = frameData.mouseXY;
