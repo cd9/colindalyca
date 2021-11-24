@@ -97,7 +97,7 @@ export class CanvasManager {
 		let width = document.body.clientWidth;
 		let resolutionScale = 1.5;
 		let ratio = Math.max(width / 2000, 0.95) * resolutionScale;
-		let height = Math.max(document.body.clientHeight, 3000);
+		let height = Math.max(document.body.clientHeight, 5000);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
 		this.canvas.width = width * ratio;
