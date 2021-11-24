@@ -92,10 +92,17 @@ export class CanvasManager {
 		if (this.canvas) {
 			this.canvas.remove();
 		}
+
+		// Create an HD canvas
+		let ratio = window.devicePixelRatio;
+		let width = document.body.clientWidth;
+		let height = Math.max(document.body.clientHeight, 7500);
 		this.canvas = document.createElement("canvas");
-		this.canvas.height = Math.max(document.body.clientHeight, 4500);
-		this.canvas.width = document.body.clientWidth;
 		document.body.appendChild(this.canvas);
+		this.canvas.width = width * ratio;
+		this.canvas.height = height * ratio;
+		this.canvas.style.width = width + "px";
+		this.canvas.style.height = height + "px";
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
