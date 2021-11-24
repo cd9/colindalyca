@@ -13,7 +13,7 @@ export class LetterSpillWidget {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.anchorX = canvas.getScaledWidth() / 2;
-		this.anchorY = 3025;
+		this.anchorY = 3150;
 		this.maxLineLength = 50;
 		this.textOffsetX = -405;
 		this.textOffsetY = 200;
@@ -52,7 +52,6 @@ export class LetterSpillWidget {
 				"Music",
 				[
 					"I try to listen to a lot of music.",
-					"",
 					"Here's a list of some of my favorite bands:",
 					"",
 					"-----[Post Rock]-----",

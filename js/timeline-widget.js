@@ -120,7 +120,7 @@ export class TimelineWidget {
 				if (j - 1 === this.blocksPerEvent - j) {
 					var circleRadius = this.circleRadius;
 					var selected = false;
-					if (Math.abs(mouseY - yOffset) < 50) {
+					if (Math.abs(mouseY - yOffset) < 95) {
 						circleRadius *= 1.2;
 						selected = true;
 					}
