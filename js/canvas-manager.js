@@ -80,10 +80,13 @@ export class CanvasManager {
 	// Track mouse
 	saveMouseCoordinates(e) {
 		if (e.pageX) {
-			this.mouseXY = [e.pageX, e.pageY];
+			this.mouseXY = [e.pageX * this.scaleFactor, e.pageY * this.scaleFactor];
 		} else if (e.touches) {
 			var touch = e.touches[0];
-			this.mouseXY = [touch.pageX, touch.pageY];
+			this.mouseXY = [
+				touch.pageX * this.scaleFactor,
+				touch.pageY * this.scaleFactor,
+			];
 		}
 	}
 
@@ -95,9 +98,9 @@ export class CanvasManager {
 
 		// Scale UI based on screen width
 		let width = document.body.clientWidth;
-		let resolutionScale = 1.5;
-		let ratio = Math.max(width / 2000, 0.9) * resolutionScale;
-		console.log(ratio);
+		let uiScale = 1.5;
+		this.scaleFactor = Math.max(width / 2000, 0.9);
+		let ratio = this.scaleFactor * uiScale;
 		let height = Math.max(document.body.clientHeight, 5000);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
@@ -107,12 +110,12 @@ export class CanvasManager {
 		this.canvas.style.height = height + "px";
 
 		this.canvas.getScaledWidth = (() => {
-			return this.canvas.width / resolutionScale;
+			return this.canvas.width / uiScale;
 		}).bind(this);
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
-		this.ctx.scale(resolutionScale, resolutionScale);
+		this.ctx.scale(uiScale, uiScale);
 
 		// Reset canvas elements
 		this.canvasElements = [];
