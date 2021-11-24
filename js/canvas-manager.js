@@ -106,7 +106,7 @@ export class CanvasManager {
 		let uiScale = 1.5;
 		this.scaleFactor = Math.max(width / 2000, 0.9);
 		let ratio = this.scaleFactor * uiScale;
-		let height = Math.max(document.body.clientHeight, 6500);
+		let height = Math.max(document.body.clientHeight, 6200);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
 		this.canvas.width = width * ratio;
