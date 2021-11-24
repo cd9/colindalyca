@@ -200,10 +200,10 @@ export class CanvasManager {
 			)
 		);
 
-		// Initialize clock for 50fps rendering
+		// Initialize clock for 60fps rendering
 		if (this.clock) {
 			clearInterval(this.clock);
 		}
-		this.clock = setInterval(this.runClock.bind(this), 1000 / 50);
+		this.clock = setInterval(this.runClock.bind(this), 1000 / 60);
 	}
 }
