@@ -159,7 +159,7 @@ export class LetterSpillWidget {
 	}
 
 	onClick() {
-		if (this.selectedBlurbIndex != -1) {
+		if (this.overlappedBlurbIndex != -1) {
 			this.selectedBlurbIndex = this.overlappedBlurbIndex;
 		}
 	}
