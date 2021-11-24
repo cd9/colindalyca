@@ -182,6 +182,7 @@ export class LetterSpillWidget {
 
 		// Initialize letter positions
 		if (this.letterPositions === null) {
+			this.lines = [];
 			this.currentIndexToAnimate = 0;
 			var letterPositions = [];
 			// For each line

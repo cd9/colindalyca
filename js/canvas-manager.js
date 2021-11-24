@@ -103,7 +103,7 @@ export class CanvasManager {
 
 		// Scale UI based on screen width
 		let width = document.body.clientWidth;
-		let uiScale = 1.5;
+		let uiScale = 2;
 		this.scaleFactor = Math.max(width / 2000, 0.9);
 		let ratio = this.scaleFactor * uiScale;
 		let height = Math.max(document.body.clientHeight, 6000);
