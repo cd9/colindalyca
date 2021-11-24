@@ -137,7 +137,7 @@ export class LetterSpillWidget {
 		this.containerWidth = 100;
 		this.containerHeight = 100;
 		this.containerLineWidth = 6;
-		this.blurbLineHeight = 30;
+		this.blurbLineHeight = 35;
 		this.blurbTitleSize = 20;
 		this.blurbLetterSize = 28;
 		this.lerpValue = 0.15;
