@@ -95,6 +95,7 @@ export class CanvasManager {
 
 		// Create an HD canvas
 		let ratio = window.devicePixelRatio || 1;
+		console.log(ratio);
 		let width = document.body.clientWidth;
 		let height = Math.max(document.body.clientHeight, 7500);
 		this.canvas = document.createElement("canvas");
