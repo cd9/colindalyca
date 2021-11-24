@@ -102,8 +102,10 @@ export class CanvasManager {
 			document.body.appendChild(this.canvas);
 			this.canvas.width = width * ratio;
 			this.canvas.height = height * ratio;
+			/*
 			this.canvas.style.width = width + "px";
 			this.canvas.style.height = height + "px";
+			*/
 		} catch (e) {
 			console.log("canvas fail");
 			console.log(e);
