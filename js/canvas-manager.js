@@ -94,16 +94,21 @@ export class CanvasManager {
 		}
 
 		// Create an HD canvas
-		let ratio = window.devicePixelRatio || 1;
-		console.log(ratio);
+		let ratio = 3;
 		let width = document.body.clientWidth;
-		let height = Math.max(document.body.clientHeight, 7500);
-		this.canvas = document.createElement("canvas");
-		document.body.appendChild(this.canvas);
-		this.canvas.width = width * ratio;
-		this.canvas.height = height * ratio;
-		this.canvas.style.width = width + "px";
-		this.canvas.style.height = height + "px";
+		let height = Math.max(document.body.clientHeight, 3000);
+		try {
+			this.canvas = document.createElement("canvas");
+			document.body.appendChild(this.canvas);
+			this.canvas.width = width * ratio;
+			this.canvas.height = height * ratio;
+			this.canvas.style.width = width + "px";
+			this.canvas.style.height = height + "px";
+		} catch (e) {
+			console.log("canvas fail");
+			console.log(e);
+		}
+		console.log("made canvas");
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
