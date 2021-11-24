@@ -14,7 +14,8 @@ export class LetterSpillWidget {
 		this.ctx = canvas.getContext("2d");
 		this.anchorX = canvas.getScaledWidth() / 2;
 		this.anchorY = 3200;
-		this.textOffsetX = -400;
+		this.maxLineLength = 50;
+		this.textOffsetX = -405;
 		this.textOffsetY = 200;
 		this.mouseXY = [0, 0];
 
@@ -22,16 +23,11 @@ export class LetterSpillWidget {
 			[
 				"Game Dev",
 				[
-					"Programming has the potential to be pretty dry, so game dev as a hobby",
-					"helps add a bit of color to balance that out.",
+					"Programming has the potential to be pretty dry, so game dev as a hobby helps add a bit of color to balance that out.",
 					"",
-					"I find that it's a pretty satisfying blend of engineering and arts,",
-					"and I also personally find it liberating to be able to express an idea",
-					"in the form of something that will be interactive, immersive, and ",
-					"(hopefully) entertaining for others.",
+					"I find that it's a pretty satisfying blend of engineering and arts, and I also personally find it liberating to be able to express an idea in the form of something that will be interactive, immersive, and (optimistically) entertaining for others.",
 					"",
-					"Over the years, I've published a few games to the Play Store. I've ",
-					"taken most of them down since, but I'm usually working on something.",
+					"Over the years, I've published a few games to the Play Store. I've taken most of them down since, but I'm usually working on something.",
 				],
 			],
 			[
@@ -41,15 +37,13 @@ export class LetterSpillWidget {
 					"",
 					"Why?",
 					"",
-					"Well for starters, I happen to be more familiar with 2D graphics and",
-					"game development than I am with any modern web development framework.",
+					"Well for starters, I happen to be more familiar with 2D graphics and game development than I am with any modern web development framework.",
 					"",
 					"It's also pretty unique!",
 					"",
-					"This website can't be trivially scraped,",
-					"and I can implement novel animations and VFX easily.",
+					"This website can't be trivially scraped, and I can implement novel animations and VFX easily.",
 					"",
-					"Take this effect for example!",
+					"Take this cool typing effect for example!",
 					"",
 					"Mostly though, I just think it's cool.",
 				],
@@ -59,32 +53,82 @@ export class LetterSpillWidget {
 				[
 					"I try to listen to a lot of music.",
 					"",
-					"Here's a short list of some bands I'm into:",
+					"Here's a list of some of my favorite bands:",
 					"",
-					"Post Rock:   Godspeed You! Black Emperor, Explosions in the Sky",
-					"             Fishmans, Mouse on the Keys",
-					"             Black Country, New Road",
+					"-----------------[Post Rock]-----------------",
+					"Godspeed You! Black Emperor",
+					"Explosions in the Sky",
+					"Fishmans, Mouse on the Keys",
+					"Black Country, New Road",
 					"",
-					"Post Punk:   Parquet Courts, IDLES, Iceage",
 					"",
-					"Indie Rock:  The National, The Strokes, Pavement, The Unicorns",
-					"             Arcade Fire, Modest Mouse, Car Seat Headrest",
+					"-----------------[Punk/Post Punk]-----------------",
+					"Parquet Courts",
+					"IDLES",
+					"Iceage",
 					"",
-					"Indie Folk:  The Microphones / Mount Eerie / any Phil Elverum project",
-					"             Neutral Milk Hotel / any Jeff Mangum project",
-					"             Big Thief, Bon Iver",
+					"-----------------[Indie/Garage Rock]-----------------",
+					"The Strokes",
+					"The White Stripes (Jack White)",
+					"Weezer",
+					"Arcade Fire",
+					"The Unicorns",
+					"Pavement",
+					"The National",
+					"Modest Mouse",
+					"Car Seat Headrest",
 					"",
-					"Art Pop:     Angel Olsen, Weyes Blood, Animal Collective",
+					"-----------------[Indie Folk]-----------------",
+					"The Microphones",
+					"Mount Eerie (Phil Elverum)",
+					"Neutral Milk Hotel (Jeff Mangum)",
+					"Big Thief",
+					"Bon Iver",
 					"",
-					"Hip Hop:     Injury Reserve, Deltron 3030, Danny Brown, Cordae, Kendrick",
-					"             A Tribe Called Quest, Kanye, Milo, Tyler, Frank Ocean",
+					"-----------------[Art Pop]-----------------",
+					"Angel Olsen",
+					"Weyes Blood",
+					"Animal Collective",
 					"",
-					"Electronic:  The Avalanches, Gorillaz, Daft Punk, Portishead",
+					"-----------------[Hip Hop]-----------------",
+					"Injury Reserve",
+					"Deltron 3030",
+					"Danny Brown",
+					"Cordae",
+					"Kendrick",
+					"A Tribe Called Quest",
+					"Kanye",
+					"Milo",
+					"Tyler",
+					"Frank Ocean",
+					"",
+					"-----------------[Electronic]-----------------",
+					"The Avalanches",
+					"Gorillaz",
+					"Daft Punk",
+					"Portishead",
 					"",
 					"I recommend any and all of the above artists.",
 				],
 			],
 		];
+		this.blurbs.forEach((b) => {
+			var lines = [];
+			b[1].forEach((l) => {
+				var stringLeft = l;
+				while (stringLeft.length > this.maxLineLength) {
+					let lastSpace = stringLeft
+						.substring(0, this.maxLineLength)
+						.lastIndexOf(" ");
+					lines.push(stringLeft.substring(0, lastSpace));
+					stringLeft = stringLeft.substring(lastSpace + 1);
+				}
+				lines.push(stringLeft);
+			});
+			b[1] = lines;
+			console.log(b);
+		});
+
 		this.blurbOffsets = [
 			[-250, 0],
 			[0, 0],
@@ -96,7 +140,7 @@ export class LetterSpillWidget {
 		this.containerLineWidth = 6;
 		this.blurbLineHeight = 30;
 		this.blurbTitleSize = 20;
-		this.blurbLetterSize = 20;
+		this.blurbLetterSize = 28;
 		this.lerpValue = 0.15;
 
 		// State
