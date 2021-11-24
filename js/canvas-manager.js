@@ -63,8 +63,8 @@ export class CanvasManager {
 	// Runs every frame
 	runClock() {
 		// Clear visible canvas every frame
-		let scrollTop = this.getScrollTop() - 500;
-		let windowHeight = window.innerHeight + 500;
+		let scrollTop = this.getScrollTop() - 1000;
+		let windowHeight = window.innerHeight + 1000;
 		this.ctx.clearRect(
 			0,
 			scrollTop,
@@ -103,7 +103,7 @@ export class CanvasManager {
 
 		// Scale UI based on screen width
 		let width = document.body.clientWidth;
-		let uiScale = 2;
+		let uiScale = 1.5;
 		this.scaleFactor = Math.max(width / 2000, 0.9);
 		let ratio = this.scaleFactor * uiScale;
 		let height = Math.max(document.body.clientHeight, 6000);
