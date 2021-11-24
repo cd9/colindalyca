@@ -43,7 +43,10 @@ export class CanvasManager {
 	}
 
 	getScrollTop() {
-		return window.pageYOffset || document.documentElement.scrollTop;
+		return (
+			(window.pageYOffset || document.documentElement.scrollTop) *
+			this.scaleFactor
+		);
 	}
 
 	onPageChanged() {
@@ -59,20 +62,27 @@ export class CanvasManager {
 
 	// Runs every frame
 	runClock() {
-		// Clear canvas every frame
-		this.ctx.clearRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
+		// Clear visible canvas every frame
+		let scrollTop = this.getScrollTop();
+		this.ctx.clearRect(
+			0,
+			scrollTop,
+			this.canvas.getScaledWidth(),
+			window.outerHeight
+		);
 		this.ctx.beginPath();
 
 		// Fill background
 		this.ctx.fillStyle = COLOR_THEME.background;
-		this.ctx.fillRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
+		this.ctx.fillRect(
+			0,
+			scrollTop,
+			this.canvas.getScaledWidth(),
+			window.outerHeight
+		);
 
 		// Call tick event on every canvas element
-		var frameData = new FrameData(
-			this.frame,
-			this.mouseXY,
-			this.getScrollTop()
-		);
+		var frameData = new FrameData(this.frame, this.mouseXY, scrollTop);
 		this.canvasElements.forEach((ce) => ce.tick(frameData));
 		this.frame++;
 	}
@@ -100,7 +110,7 @@ export class CanvasManager {
 		let uiScale = 1.5;
 		this.scaleFactor = Math.max(width / 2000, 0.9);
 		let ratio = this.scaleFactor * uiScale;
-		let height = Math.max(document.body.clientHeight, 7000);
+		let height = Math.max(document.body.clientHeight, 6000);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
 		this.canvas.width = width * ratio;
