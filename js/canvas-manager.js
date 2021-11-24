@@ -64,22 +64,18 @@ export class CanvasManager {
 	runClock() {
 		// Clear visible canvas every frame
 		let scrollTop = this.getScrollTop();
+		let windowHeight = window.innerHeight + 100;
 		this.ctx.clearRect(
 			0,
 			scrollTop,
 			this.canvas.getScaledWidth(),
-			window.outerHeight
+			windowHeight
 		);
 		this.ctx.beginPath();
 
 		// Fill background
 		this.ctx.fillStyle = COLOR_THEME.background;
-		this.ctx.fillRect(
-			0,
-			scrollTop,
-			this.canvas.getScaledWidth(),
-			window.outerHeight
-		);
+		this.ctx.fillRect(0, scrollTop, this.canvas.getScaledWidth(), windowHeight);
 
 		// Call tick event on every canvas element
 		var frameData = new FrameData(this.frame, this.mouseXY, scrollTop);
@@ -198,7 +194,7 @@ export class CanvasManager {
 				this.canvas,
 				"This website was build entirely with HTML Canvas",
 				this.canvas.getScaledWidth() / 2,
-				this.canvas.height - 30,
+				this.canvas.getScaledHeight() - 30,
 				16,
 				COLOR_THEME.purple
 			)

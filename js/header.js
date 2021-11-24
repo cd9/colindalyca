@@ -26,18 +26,22 @@ export class Header {
 	}
 
 	grabGeo() {
-		fetch("https://ipapi.co/json").then((response) => {
-			response.json().then((json) => {
-				var city = json.city;
-				var region = json.region;
-				var country = json.country;
-				if (city && region && country) {
-					var message = `it appears you are in ${city}, ${region}, ${country} - you should use an ad blocker and a VPN!`;
-					this.messages.push(message);
-					this.measureText();
-				}
+		fetch("https://ipapi.co/json")
+			.then((response) => {
+				response.json().then((json) => {
+					var city = json.city;
+					var region = json.region;
+					var country = json.country;
+					if (city && region && country) {
+						var message = `it appears you are in ${city}, ${region}, ${country} - you should use an ad blocker and a VPN!`;
+						this.messages.push(message);
+						this.measureText();
+					}
+				});
+			})
+			.catch((e) => {
+				console.log("ip grab blocked");
 			});
-		});
 	}
 
 	configureText() {
