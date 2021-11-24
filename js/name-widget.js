@@ -34,7 +34,7 @@ export class NameWidget {
 
 		this.offsetY = 75;
 
-		this.blockWidth = 10;
+		this.blockWidth = 9;
 		this.blockSpacing = 1;
 		this.mouseDistance = 300;
 		this.mouseDistanceSquared = Math.pow(this.mouseDistance, 2);

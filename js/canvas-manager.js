@@ -96,7 +96,8 @@ export class CanvasManager {
 		// Scale UI based on screen width
 		let width = document.body.clientWidth;
 		let resolutionScale = 1.5;
-		let ratio = Math.max(width / 2000, 0.95) * resolutionScale;
+		let ratio = Math.max(width / 2000, 0.9) * resolutionScale;
+		console.log(ratio);
 		let height = Math.max(document.body.clientHeight, 5000);
 		this.canvas = document.createElement("canvas");
 		document.body.appendChild(this.canvas);
@@ -126,7 +127,7 @@ export class CanvasManager {
 		this.canvasElements.push(new NameWidget(this.canvas));
 
 		// Link Bar
-		var linkY = 295;
+		var linkY = 280;
 		var linkX = this.canvas.getScaledWidth() / 2;
 		var linkSize = 25;
 
