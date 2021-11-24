@@ -80,14 +80,13 @@ export class CanvasManager {
 	// Track mouse
 	saveMouseCoordinates(e) {
 		if (e.pageX) {
-			this.mouseXY = [e.pageX * this.scaleFactor, e.pageY * this.scaleFactor];
+			this.mouseXY = [e.pageX, e.pageY];
 		} else if (e.touches) {
 			var touch = e.touches[0];
-			this.mouseXY = [
-				touch.pageX * this.scaleFactor,
-				touch.pageY * this.scaleFactor,
-			];
+			this.mouseXY = [touch.pageX, touch.pageY];
 		}
+		this.mouseXY[0] *= this.scaleFactor;
+		this.mouseXY[1] *= this.scaleFactor;
 	}
 
 	initialize() {
@@ -111,6 +110,10 @@ export class CanvasManager {
 
 		this.canvas.getScaledWidth = (() => {
 			return this.canvas.width / uiScale;
+		}).bind(this);
+
+		this.canvas.getScaledHeight = (() => {
+			return this.canvas.height / uiScale;
 		}).bind(this);
 
 		// Save the context
