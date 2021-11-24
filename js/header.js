@@ -60,7 +60,7 @@ export class Header {
 		this.ctx.beginPath();
 		this.ctx.moveTo(0, this.lineY);
 		this.ctx.lineWidth = this.lineWidth;
-		this.ctx.lineTo(this.canvas.width, this.lineY);
+		this.ctx.lineTo(this.canvas.getScaledWidth(), this.lineY);
 		this.ctx.stroke();
 
 		this.configureText();
@@ -69,7 +69,7 @@ export class Header {
 			this.getFullString(),
 			this.totalWidth -
 				((frameData.frame * this.speed) %
-					(this.totalWidth * 2 + this.canvas.width)),
+					(this.totalWidth * 2 + this.canvas.getScaledWidth())),
 			this.lineY - 10
 		);
 	}

@@ -22,7 +22,8 @@ export class TerminalWidget {
 		// State for moving window
 		this.overlappingWindow = false;
 		this.draggingWindow = false;
-		this.targetWindowX = this.canvas.width / 2 - this.windowWidth / 2;
+		this.targetWindowX =
+			this.canvas.getScaledWidth() / 2 - this.windowWidth / 2;
 		this.targetWindowY = 325;
 		this.windowX = this.targetWindowX;
 		this.windowY = this.targetWindowY;

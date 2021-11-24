@@ -122,7 +122,7 @@ export class NameWidget {
 		var width = this.matrix[0].length;
 		var offsetX =
 			(this.blockWidth * width + this.blockSpacing * (width - 1)) / -2 +
-			this.canvas.width / 2;
+			this.canvas.getScaledWidth() / 2;
 		var mouseXY = frameData.mouseXY;
 		for (var i = 0; i < height; i++) {
 			for (var j = 0; j < width; j++) {

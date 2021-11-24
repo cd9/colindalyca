@@ -12,7 +12,7 @@ export class LetterSpillWidget {
 	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
-		this.anchorX = canvas.width / 2;
+		this.anchorX = canvas.getScaledWidth() / 2;
 		this.anchorY = 3200;
 		this.textOffsetX = -400;
 		this.textOffsetY = 200;
@@ -149,12 +149,12 @@ export class LetterSpillWidget {
 						blurbPoints.x1 +
 						this.containerLineWidth +
 						Math.random() *
-						(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
+							(blurbPoints.x2 - blurbPoints.x1 - 3 * this.containerLineWidth);
 					var randY =
 						blurbPoints.y1 +
 						this.containerLineWidth +
 						(0.25 + Math.random() * 0.75) *
-						(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
+							(blurbPoints.y2 - blurbPoints.y1 - 3 * this.containerLineWidth);
 					var randRotation = Math.random() * 360;
 					letterPositions.push({
 						letter: line[k],
@@ -215,10 +215,12 @@ export class LetterSpillWidget {
 			}
 
 			var distanceSquaredFromMouse =
-				Math.pow(this.mouseXY[0] - position.x, 2) + Math.pow(this.mouseXY[1] - position.y, 2);
+				Math.pow(this.mouseXY[0] - position.x, 2) +
+				Math.pow(this.mouseXY[1] - position.y, 2);
 			var yPos = position.y;
 			if (distanceSquaredFromMouse < this.mouseThreshold) {
-				yPos -= (1 - (distanceSquaredFromMouse / this.mouseThreshold)) * this.yDelta;
+				yPos -=
+					(1 - distanceSquaredFromMouse / this.mouseThreshold) * this.yDelta;
 			}
 
 			new TextField(
@@ -271,10 +273,7 @@ export class LetterSpillWidget {
 			this.ctx.lineTo(blurbPoints.x2, blurbPoints.y1);
 			this.ctx.lineTo(blurbPoints.x2, blurbPoints.y2);
 			if (this.selectedBlurbIndex !== i) {
-				this.ctx.lineTo(
-					blurbPoints.x1 - lineWidth / 2,
-					blurbPoints.y2
-				);
+				this.ctx.lineTo(blurbPoints.x1 - lineWidth / 2, blurbPoints.y2);
 			} else {
 				//TODO
 			}

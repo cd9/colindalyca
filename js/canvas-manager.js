@@ -60,12 +60,12 @@ export class CanvasManager {
 	// Runs every frame
 	runClock() {
 		// Clear canvas every frame
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.clearRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
 		this.ctx.beginPath();
 
 		// Fill background
 		this.ctx.fillStyle = COLOR_THEME.background;
-		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillRect(0, 0, this.canvas.getScaledWidth(), this.canvas.height);
 
 		// Call tick event on every canvas element
 		var frameData = new FrameData(
@@ -93,28 +93,25 @@ export class CanvasManager {
 			this.canvas.remove();
 		}
 
-		// Create an HD canvas
-		let ratio = window.devicePixelRatio;
+		// Scale UI based on screen width
 		let width = document.body.clientWidth;
+		let ratio = Math.max(width / 2000, 0.95) * 2;
+		console.log(ratio);
 		let height = Math.max(document.body.clientHeight, 3000);
-		try {
-			this.canvas = document.createElement("canvas");
-			document.body.appendChild(this.canvas);
-			this.canvas.width = width * 1.5;
-			this.canvas.height = height * 1.5;
-			this.canvas.style.width = width + "px";
-			this.canvas.style.height = height + "px";
-		} catch (e) {
-			console.log("canvas fail");
-			console.log(e);
-		}
-		console.log("made canvas");
-		console.log(`ratio of ${ratio}`);
-		console.log(`height of ${this.canvas.height}`);
-		console.log(`width of ${this.canvas.width}`);
+		this.canvas = document.createElement("canvas");
+		document.body.appendChild(this.canvas);
+		this.canvas.width = width * ratio;
+		this.canvas.height = height * ratio;
+		this.canvas.style.width = width + "px";
+		this.canvas.style.height = height + "px";
+
+		this.canvas.getScaledWidth = (() => {
+			return this.canvas.width / 2;
+		}).bind(this);
 
 		// Save the context
 		this.ctx = this.canvas.getContext("2d");
+		this.ctx.scale(2, 2);
 
 		// Reset canvas elements
 		this.canvasElements = [];
@@ -130,7 +127,7 @@ export class CanvasManager {
 
 		// Link Bar
 		var linkY = 295;
-		var linkX = this.canvas.width / 2;
+		var linkX = this.canvas.getScaledWidth() / 2;
 		var linkSize = 25;
 
 		// Github Link
@@ -183,7 +180,7 @@ export class CanvasManager {
 			new TextField(
 				this.canvas,
 				"This website was build entirely with HTML Canvas",
-				this.canvas.width / 2,
+				this.canvas.getScaledWidth() / 2,
 				this.canvas.height - 30,
 				16,
 				COLOR_THEME.purple

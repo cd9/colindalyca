@@ -11,11 +11,11 @@ export class TimelineWidget {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 		this.yStart = 850;
-		this.xStart = canvas.width / 2 - 200;
+		this.xStart = canvas.getScaledWidth() / 2 - 200;
 		this.titleTextField = new TextField(
 			canvas,
 			"Timeline",
-			canvas.width / 2,
+			canvas.getScaledWidth() / 2,
 			this.yStart - 10,
 			35,
 			COLOR_THEME.green
@@ -35,7 +35,8 @@ export class TimelineWidget {
 		window.addEventListener(
 			"scroll",
 			function () {
-				var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+				var scrollTop =
+					window.pageYOffset || document.documentElement.scrollTop;
 				this.scrollY = scrollTop + window.innerHeight / 3;
 			}.bind(this)
 		);
