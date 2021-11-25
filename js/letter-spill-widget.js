@@ -60,7 +60,6 @@ export class LetterSpillWidget {
 					"Fishmans, Mouse on the Keys",
 					"Black Country, New Road",
 					"",
-					"",
 					"-----[Punk/Post Punk]-----",
 					"Parquet Courts",
 					"IDLES",
